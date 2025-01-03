@@ -5,6 +5,7 @@
 
 body{
     background: #151515;
+    color: white;
 }
 .left-bg-circle{
     width: 918px;
@@ -30,7 +31,6 @@ body{
     backdrop-filter: blur(12.414604187011719px);
 }
 .form-div{
-    width: 493px;
     height: 629px;
     flex-shrink: 0;
     border-radius: 20px;
