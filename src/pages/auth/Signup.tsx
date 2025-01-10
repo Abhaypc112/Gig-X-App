@@ -1,30 +1,52 @@
 import NamedLogo from '../../assets/NamedLogo.svg';
 import Google from '../../assets/Google.svg';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateOtp, signupUser } from '../../redux/slices/authSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import LoadingPage from '../../components/LoadingPage';
 import { SignupValidation } from '../../validation/SignupValidation';
-
+import {jwtDecode} from "jwt-decode";
 function Signup() {
   const [signupData,setSignupData] = useState({
     email:"",
     name:"",
     password:"",
     conformPassword:"",
-    otp:""
+    otp:"",
+    role:""
   });
   const [otpPage,setOtpPage] = useState(false);
   const [signupError,setSignupError] = useState({name:"",email:"",password:"",conformPassword:""})
   const dispatch = useDispatch<AppDispatch>();
-  const {loading,error,user} = useSelector((state:RootState)=>state.auth)
+  const UserRole = localStorage.getItem("role");
+  const {loading,error} = useSelector((state:RootState)=>state.auth)
   const navigate = useNavigate();
+  const {option} = useParams();
+
+  // Get the token from the URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    console.log(token)
+    if (token) {
+      // Decode the JWT token to get user details
+      const userToken = jwtDecode(token);
+      console.log(userToken);
+      
+
+      // Remove the token from the URL
+      window.history.replaceState({}, document.title, "/api/auth/google");
+    }
+  }, []);
 
   useEffect(()=>{
-    if(user)navigate('/client-dashboard') 
-  },[user])
+    if(UserRole === "user")navigate('/user/home') 
+    if(UserRole === "freelancer")navigate('/freelancer/dashboard') 
+    if(UserRole === "admin")navigate('/admin/dashboard') 
+  },[UserRole])
 
   const handleOnChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     const {name,value} = event.target;
@@ -32,6 +54,7 @@ function Signup() {
   };
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
+    if(option)setSignupData({...signupData,role:option})
     const valErrors = await SignupValidation(signupData);
     if(Object.values(valErrors).every((error) => error === '')){
       await dispatch(generateOtp(signupData.email))
@@ -46,23 +69,12 @@ function Signup() {
     
   };
   const handleGoogleAuth = async () => {
-    try {
-      if ((window as any).gapi) {
-        const googleAuth = (window as any).gapi.auth2.getAuthInstance();
-        const googleUser = await googleAuth.signIn();
-        const idToken = googleUser.getAuthResponse().id_token;
-
-        await dispatch(googleAuth(idToken)).unwrap();
-      } else {
-        console.error('Google API is not initialized.');
-      }
-    } catch (err) {
-      console.error('Google Login Error:', err);
-    }
+    window.location.href = "http://localhost:5000/api/auth/google";
   }
   if(loading) {
     return <LoadingPage/>
   }
+  if(option!=='user' && option!=="freelancer") return <Navigate to="/option"/>
   return (
    <>
       {!otpPage?(

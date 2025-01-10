@@ -13,13 +13,16 @@ function Login() {
     password:""
   });
   const dispatch = useDispatch <AppDispatch> ();
-  const {user,error} = useSelector((state:RootState)=>state.auth);
+  const {error} = useSelector((state:RootState)=>state.auth);
+  const role = localStorage.getItem("role");
   const [loginError,setLoginError] = useState({email:"",password:""});
   const navigate = useNavigate();
 
   useEffect(()=>{
-    if(user)navigate('/client-dashboard') 
-  },[user])
+    if(role === "user")navigate('/user/home') 
+    if(role === "freelancer")navigate('/freelancer/dashboard') 
+    if(role === "admin")navigate('/admin/dashboard') 
+  },[role])
 
 
   const handleOnChange = (event :React.ChangeEvent<HTMLInputElement>) => {
@@ -55,9 +58,9 @@ function Login() {
                 <input type="checkbox" />
                 <span className='text-neutral-400  w-[100%] flex justify-between'><span>Remember me</span><span className='cursor-pointer'>Forget password ?</span></span>
               </div>
-              <button type='submit' className='w-[80%] h-[63px] rounded-lg  bg-yellow-500 font-bold text-xl text-black'>Sign Up</button>
+              <button type='submit' className='w-[80%] h-[63px] rounded-lg  bg-yellow-500 font-bold text-xl text-black'>Login</button>
               <button type='button' className='w-[80%] h-[63px] rounded-lg  border font-bold text-xl flex justify-center items-center space-x-3 text-white'><img src={Google} alt="google" /><span>Continue with Google</span></button>
-              <div className='text-white space-x-3'><span className='text-neutral-400'>I have a account</span><NavLink to='/'><span className='cursor-pointer'><b>Sign Up?</b></span></NavLink></div>
+              <div className='text-white space-x-3'><span className='text-neutral-400'>I have a account</span><NavLink to='/option'><span className='cursor-pointer'><b>Sign Up?</b></span></NavLink></div>
             </form>
           </div>
         </div>
