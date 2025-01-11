@@ -26,14 +26,16 @@ axiosInstance.interceptors.response.use(
         if(error.response && error.response.status === 401 && !orginalRequest._retry){
         orginalRequest._retry = true;
         try{
-            const response = await axios.post<{accessToken: string}>('/auth/refresh-token',{},{withCredentials:true});
-            const { accessToken } = response.data;
+            const response = await axiosInstance.post('/user/refresh-token',{},{withCredentials:true});
+            console.log(response)
+            const { accessToken } = response.data.token;
             localStorage.setItem('accessToken', accessToken);
             if(orginalRequest.headers){
                 orginalRequest.headers['Authorization'] = `Bearer ${accessToken}`; 
             }
             return axios(orginalRequest);
         }catch(refreshError){
+            localStorage.clear()
             console.error('Token refresh failed:', refreshError);
         }
     }
