@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { googleAuthApi, loginUserApi, signupUserApi, userOtApi } from '../../api/authApi';
-import { RootState } from '../store';
+import { googleAuthApi, loginUserApi, signupUserApi, userLogOutApi, userOtApi } from '../../../api/authApi';
+import { RootState } from '../../store';
 
 interface AuthState {
     user: any | null;
@@ -54,6 +54,16 @@ interface AuthState {
         return response.data.userData;
       } catch (error: any) {
         return rejectWithValue(error.response?.data?.message || 'Login failed');
+      }
+    }
+  );
+  export const userLogOut = createAsyncThunk('/user/log-out',
+    async (_, { rejectWithValue }) => {
+      try {
+        const response = await userLogOutApi();
+        return response.data;
+      } catch (error: any) {
+        return rejectWithValue(error.response?.data?.message || 'LogOut failed');
       }
     }
   );
@@ -123,6 +133,23 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(generateOtp.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Log out
+      .addCase(userLogOut.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(userLogOut.fulfilled, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.accessToken = action.payload.accessToken;
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('role');
+      })
+      .addCase(userLogOut.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.error = action.payload;
       })

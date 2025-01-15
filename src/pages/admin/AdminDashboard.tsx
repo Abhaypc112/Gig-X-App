@@ -8,7 +8,7 @@ function AdminDashboard() {
       <div className="flex justify-center lg:justify-start">
   <div className="min-h-screen lg:w-[75%] p-5 flex flex-col lg:flex-row mt-[8rem] lg:ml-[20rem]">
     {/* Main Content */}
-    <div className="right-content w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 lg:gap-10">
+    <div className="right-content w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 lg:gap-5">
       {/* Earnings Graph */}
       <div className="col-span-1 sm:col-span-1 lg:col-span-2 glass rounded-xl flex flex-col p-4">
         <EarningsGraph />

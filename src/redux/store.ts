@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
-import {adminRootReducer} from './slices/adminRootReducer';
+import authReducer from './slices/auth/authSlice';
+import {adminRootReducer} from './rootReducers/adminRootReducer';
+import { freelancerRootReducer } from './rootReducers/freelancerRootReducer';
 
 
 export const store = configureStore({
     reducer:{
         auth:authReducer,
         admin:adminRootReducer,
+        freelancer:freelancerRootReducer,
     }
 })
 

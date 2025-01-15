@@ -3,7 +3,7 @@ import Google from '../../assets/Google.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../redux/slices/authSlice';
+import { loginUser } from '../../redux/slices/auth/authSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { LoginVlidation } from '../../validation/LoginValidation';
 
@@ -31,7 +31,7 @@ function Login() {
   };
   const handleOnSubmit = async (event :React.FormEvent) => {
     event.preventDefault();
-    const valErrors = await LoginVlidation(loginData);
+    const valErrors = LoginVlidation(loginData);
     if(Object.values(valErrors).every((error) => error === '')){
       await dispatch(loginUser(loginData))
     }

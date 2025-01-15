@@ -1,19 +1,16 @@
+import { IAuth } from "../interface/authInterface";
 
-interface Iform {
-    email: string;
-    password: string;
-  };
-export const LoginVlidation = (formData:Iform) : any => {
+export const LoginVlidation = (formData:IAuth) => {
     const newErrors = {
         email: '',
         password: '',
     };
-    if (!formData.email.trim()) {
+    if (!formData.email?.trim()) {
         newErrors.email = 'Email is required *';
     }else if (!/^[\w-.]+@[\w-]+\.+[\w-]{2,4}$/.test(formData.email)) {
         newErrors.email = 'Invalid email format *';
     }
-    if (!formData.password.trim()) {
+    if (!formData.password?.trim()) {
         newErrors.password = 'Password is required *';
     }else if (formData.password.length < 6) {
         newErrors.password = 'Password must be at least 6 characters *';

@@ -8,18 +8,20 @@ export const userOtApi = (email : string) => {
     console.log(res)
     return res
 }
-export const signupUserApi = (signupData : object) : Promise<AxiosResponse<any>> => {
+export const signupUserApi = (signupData : object) => {
     const res = axiosInstance.post(`${AUTH}/user/signup`,signupData);
-    console.log(res,"api")
     return res
 }
-export const loginUserApi = (loginData : object) : Promise<AxiosResponse<any>> => {
+export const loginUserApi = (loginData : object) => {
     const res = axiosInstance.post(`${AUTH}/user/login`,loginData);
-    console.log(res)
     return res
 }
-export const googleAuthApi = (idToken: string) : Promise<AxiosResponse<any>> => {
+export const googleAuthApi = (idToken: string) => {
     const res = axiosInstance.post(`${AUTH}/auth/google`,idToken);
-    console.log(res)
+
+    return res
+}
+export const userLogOutApi = () : Promise<AxiosResponse<any>> => {
+    const res = axiosInstance.post('/user/log-out');
     return res
 }

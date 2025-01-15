@@ -1,27 +1,23 @@
-import { useEffect } from "react"
-import { adminGetAllUsers, adminUpdateUser } from "../../redux/slices/admin/userHandleSlice";
+import { useEffect, useState } from "react"
+import { adminBlockUser, adminGetAllUsers } from "../../redux/slices/admin/manageUserSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-
-interface Iusers {
-   _id:string;
-    name:string;
-    email:string;
-    role:string;
-    isBlock:boolean;
-    skills:[string];
-    experience:string;
-}
 
 const AdminHandleUsers = () => {
    const dispatch = useAppDispatch();
-   const {users} = useAppSelector((state) => state.admin.userManagemant);
+   const {users} = useAppSelector((state) => state.admin.adminUserManagemant);
+   const [filter, setFilter] = useState<string | null>(null);
+
+   const filteredData = users.filter((user) => {
+     if (filter === null) return true;
+     return user.role === filter;
+   });
 
    useEffect(() => {
       dispatch(adminGetAllUsers());
    },[dispatch])
 
-   const handleUserRole = async (userId : string )  => {
-      await dispatch(adminUpdateUser({userId}))
+   const handleUser = async (userId :string )  => {
+      if(userId) await dispatch(adminBlockUser({userId}))
    }
    
   return (
@@ -29,9 +25,9 @@ const AdminHandleUsers = () => {
       <div className=" flex flex-col min-h-screen p-5 space-y-6">
       <div className="top-side flex justify-between mt-[8rem] ml-[20rem] mr-[3rem]">
         <div className="options w-[100%] space-x-5 font-bold">
-            <button className="glass px-5 p-3 rounded-md text-xs">CLIENTS</button>
-            <button className="glass px-5 p-3 rounded-md text-xs">FREELANCERS</button>
-            <button className="glass px-5 p-3 rounded-md text-xs">BTN</button>
+            <button onClick={()=>setFilter(null)} className="glass px-5 p-3 rounded-md text-xs">ALL</button>
+            <button onClick={()=>setFilter("user")}  className="glass px-5 p-3 rounded-md text-xs">USERS</button>
+            <button onClick={()=>setFilter("freelancer")}  className="glass px-5 p-3 rounded-md text-xs">FREELANCERS</button>
             <button className="glass px-5 p-3 rounded-md text-xs">BTN</button>
         </div>
         <div className="search ">
@@ -49,15 +45,15 @@ const AdminHandleUsers = () => {
              </tr>
           </div>
          {
-            users && users.map((user : Iusers) => {
+            filteredData && filteredData.map((user) => {
                return(
                   <div className="table-data w-[100%] border h-14 rounded-md">
                      <tr className="w-[100%] flex items-center h-14 px-5 ">
                         <td className="w-[30%] space-x-3"><input type="checkbox"/><span >{user.name}</span></td>
                         <td className="w-[20%] text-center">20</td>
                         <td className="w-[20%] text-center">{user.role}</td>
-                        <td className="w-[20%] text-center"><button onClick={()=>handleUserRole(user._id)} className="bg-[#7f7f7f] w-[5rem] p-1 rounded-sm ">{user.isBlock ? "Unblock" : "Block"}</button></td>
-                        <td className="w-[20%] text-center"><button className="bg-[#13a14c] w-[5rem] p-1 rounded-sm "> View </button></td>
+                        <td className="w-[20%] text-center"><button onClick={()=>handleUser(user._id)} className="glass w-[5rem] p-1 rounded-sm">{user.isBlock ? "Unblock" : "Block"}</button></td>
+                        <td className="w-[20%] text-center"><button className="glass w-[5rem] p-1 rounded-sm "> View </button></td>
                      </tr>
                </div>
                )

@@ -4,8 +4,20 @@ import SearchIcon from '../../assets/Searchicon.svg';
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { useAppDispatch } from '../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { userLogOut } from '../../redux/slices/auth/authSlice';
  
 const UserNav = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [logOutModal,setLogOutModal] = useState(false);
+  
+  const handleLogOut = async() => {
+    await dispatch(userLogOut())
+    navigate('/login')
+  }
   return (
     <div className="flex justify-center p-5 z-50 w-[100%] fixed backdrop-blur">
       <div className="nav w-[95%] h-[95px] bg-black rounded-3xl flex justify-between items-center px-5">
@@ -23,11 +35,21 @@ const UserNav = () => {
               <IoNotificationsOutline className='w-12 h-12 bg-[#222222] p-3 rounded-full' />
             </ul>
         </div>
-        <div className="right hidden lg:flex">
-            <div className='w-[260px] h-[65px] bg-[#575757] rounded-md flex justify-between px-3 items-center'>
+        <div className="right hidden lg:flex relative">
+            <div onClick={()=>setLogOutModal(!logOutModal)} className='w-[260px] h-[65px] bg-[#575757] rounded-md flex justify-between px-3 items-center '>
             <div>
                 <p className='text-xs'>Hello, Good Morning</p>
-                <div className=" text-white  font-semibold ">Muhammed Muhsin P</div>
+                <div className=" text-white  font-semibold ">Freelancer</div>
+                {
+                  logOutModal?(
+                    <div className='w-[16rem] h-[8rem] bg-black rounded-md z-50 absolute top-20 left-0 font-bold flex flex-col justify-evenly items-center'>
+                      <button className="glass w-[90%] p-2 rounded-md">Profile</button>
+                      <button onClick={handleLogOut} className="glass w-[90%] p-2 rounded-md">Log Out</button>
+                    </div>
+                  ):(
+                    null
+                  )
+                }
             </div>
             <img className="w-[56.22px] h-[56.22px] rounded-full" src="https://via.placeholder.com/56x56" />
             </div>

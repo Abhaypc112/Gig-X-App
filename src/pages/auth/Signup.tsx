@@ -3,7 +3,7 @@ import Google from '../../assets/Google.svg';
 import { Navigate, NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { generateOtp, signupUser } from '../../redux/slices/authSlice';
+import { generateOtp, signupUser } from '../../redux/slices/auth/authSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import LoadingPage from '../../components/LoadingPage';
 import { SignupValidation } from '../../validation/SignupValidation';
