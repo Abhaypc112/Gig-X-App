@@ -13,21 +13,22 @@ const initialState : IHandleGig = {
     error:null
 }
 
-export const adminGetAllGigs = createAsyncThunk('freelancer/get-all-gigs',
+export const adminGetAllGigs = createAsyncThunk('admin/get-all-gigs',
     async(_,{rejectWithValue}) => {
          try{
              const res = await adminGetAllGigsApi()
-             return res.data
+             return res.data.gigs
          }catch(error : any){
              return rejectWithValue(error.response?.data?.message || 'Gigs not fount !');
          }
     }
  );
-export const adminBlockGig = createAsyncThunk('admin/update-user',
+export const adminBlockGig = createAsyncThunk('admin/block-gig',
     async(gigId : object,{rejectWithValue}) => {
     try{
         const res = await adminBlockGigApi(gigId);
-        return res.data;
+        console.log(res.data.gig)
+        return res.data.gig;
     }catch(error:any){
         return rejectWithValue(error.response?.data?.message || 'Gig not fount');
     }

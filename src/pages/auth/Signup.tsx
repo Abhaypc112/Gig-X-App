@@ -1,5 +1,4 @@
 import NamedLogo from '../../assets/NamedLogo.svg';
-import Google from '../../assets/Google.svg';
 import { Navigate, NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +6,10 @@ import { generateOtp, signupUser } from '../../redux/slices/auth/authSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import LoadingPage from '../../components/LoadingPage';
 import { SignupValidation } from '../../validation/SignupValidation';
-import {jwtDecode} from "jwt-decode";
-function Signup() {
+import { GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+
+function Signup () {
   const [signupData,setSignupData] = useState({
     email:"",
     name:"",
@@ -25,25 +26,9 @@ function Signup() {
   const navigate = useNavigate();
   const {option} = useParams();
 
-  // Get the token from the URL
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-
-    console.log(token)
-    if (token) {
-      // Decode the JWT token to get user details
-      const userToken = jwtDecode(token);
-      console.log(userToken);
-      
-
-      // Remove the token from the URL
-      window.history.replaceState({}, document.title, "/api/auth/google");
-    }
-  }, []);
 
   useEffect(()=>{
-    if(UserRole === "user")navigate('/user/home') 
+    if(UserRole === "user")navigate('/home') 
     if(UserRole === "freelancer")navigate('/freelancer/dashboard') 
     if(UserRole === "admin")navigate('/admin/dashboard') 
   },[UserRole])
@@ -68,9 +53,7 @@ function Signup() {
     if (error)navigate('/login')  
     
   };
-  const handleGoogleAuth = async () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
-  }
+
   if(loading) {
     return <LoadingPage/>
   }
@@ -99,7 +82,15 @@ function Signup() {
              <span className='text-neutral-400'>I agree to the</span><span><b>Terms & Conditions</b></span>
            </div>
            <button type='button' onClick={handleSignUp} className='w-[80%] h-[63px] rounded-lg  bg-yellow-500 font-bold text-xl text-black'>Sign Up</button>
-           <button type='button' onClick={handleGoogleAuth} className='w-[80%] h-[63px] rounded-lg  border font-bold text-xl flex justify-center items-center space-x-3 text-white'><img src={Google} alt="google" /><span>Continue with Google</span></button>
+           <GoogleLogin
+              onSuccess={async(credentialResponse) => {
+                let data = {credentialResponse,signupData}
+                await axios.post('http://localhost:5000/api/auth/google',data)
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
            <div className='text-white space-x-3'><span className='text-neutral-400'>I have a account</span> <NavLink to='/login'><span className='cursor-pointer'><b>LogIn?</b></span></NavLink></div>
          </form>
        </div>
@@ -118,7 +109,15 @@ function Signup() {
               <p className='text-xl text-neutral-400 w-[80%]'>{signupData.email}</p>
               <input onChange={handleOnChange} type="text" placeholder='Enter the OTP' name='otp' value={signupData.otp} className='w-[80%] h-[63px] rounded-lg bg-transparent border p-5'/>
               <button type='submit' className='w-[80%] h-[63px] rounded-lg  bg-yellow-500 font-bold text-xl text-black'>Verify OTP</button>
-              <button type='button' className='w-[80%] h-[63px] rounded-lg  border font-bold text-xl flex justify-center items-center space-x-3 text-white'><img src={Google} alt="google" /><span>Continue with Google</span></button>
+              <GoogleLogin
+                onSuccess={async(credentialResponse) => {
+                  const post = await axios.post('http://localhost:5000/api/auth/google', credentialResponse)
+                  console.log(post)
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+             />
               <div className='text-white space-x-3'><span className='text-neutral-400'>I have a account</span><NavLink to='/login'><span className='cursor-pointer'><b>LogIn?</b></span></NavLink></div>
             </form>
           </div>

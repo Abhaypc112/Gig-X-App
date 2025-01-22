@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
-import { freelancerGetAllGigs, freelancerUpdateGigStataus } from "../../redux/slices/freelancer/gigHandleSlice";
+import { freelancerDeleteGig, freelancerGetAllGigs, freelancerUpdateGigStataus } from "../../redux/slices/freelancer/gigHandleSlice";
 import { useNavigate } from "react-router-dom";
 
 const FreelancerHandleGigs = () => {
@@ -14,6 +14,9 @@ const FreelancerHandleGigs = () => {
 
    const handleGigStatus = async(gigId : string) => {
       await dispatch(freelancerUpdateGigStataus({gigId}))
+   }
+   const handleDeleteGig = async(gigId : string) => {
+      await dispatch(freelancerDeleteGig({gigId}))
    }
 
   return (
@@ -40,6 +43,7 @@ const FreelancerHandleGigs = () => {
                 <td className="w-[20%] font-bold">BLOCK</td>
                 <td className="w-[20%] font-bold">EDIT</td>
                 <td className="w-[20%] font-bold">DELETE</td>
+                <td className="w-[20%] font-bold">VIEW</td>
              </tr>
           </div>
           {
@@ -52,6 +56,7 @@ const FreelancerHandleGigs = () => {
                      <td className="w-[20%] text-center"><button onClick={()=>handleGigStatus(gig._id)} className={gig.isActive?"bg-[#13A14C] w-[5rem] p-1 rounded-sm":"bg-[#7f7f7f] w-[5rem] p-1 rounded-sm"}> {gig.isActive?"Active":"Inactive"} </button></td>
                      <td className="w-[20%] text-center"><button  className=" w-[5rem] p-1 rounded-sm">{gig.isBlock ? "Unblock" : "Block"}</button></td>
                      <td className="w-[20%] text-center"><button onClick={()=>naviagte(`/freelancer/${gig._id}/edit-gig`)} className="glass w-[5rem] p-1 rounded-sm "> Edit </button></td>
+                     <td onClick={()=>handleDeleteGig(gig._id)} className="w-[20%] text-center"><button className="glass w-[5rem] p-1 rounded-sm "> Delete </button></td>
                      <td className="w-[20%] text-center"><button className="glass w-[5rem] p-1 rounded-sm "> View </button></td>
                   </tr>
                </div>

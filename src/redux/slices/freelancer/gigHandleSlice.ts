@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGig } from "../../../interface/gigInterface";
-import { freelancerCreateGigApi, freelancerEditGigApi, freelancerGetAllGigsApi, freelancerUpdateGigStatausApi } from "../../../api/FreelancerApi";
+import { ICategory, IGig } from "../../../interface/gigInterface";
+import { freelancerCreateGigApi, freelancerDeleteGigApi, freelancerEditGigApi, freelancerGetAllCategoryApi, freelancerGetAllGigsApi, freelancerUpdateGigStatausApi } from "../../../api/FreelancerApi";
+
 
 interface IHandleGig {
+    categorys:ICategory[]
     gigs: IGig[];
     loading:boolean;
     error:string | null;
 }
 const initialState : IHandleGig = {
+    categorys:[],
     gigs:[],
     loading:false,
     error:null
@@ -50,6 +53,26 @@ export const freelancerEditGig = createAsyncThunk('freelancer/edit-gig',
              return res.data
          }catch(error : any){
              return rejectWithValue(error.response?.data?.message || 'Update Gig Failed !');
+         }
+    }
+ )
+ export const freelancerDeleteGig = createAsyncThunk('freelancer/delete-gig',
+    async(gigId : object,{rejectWithValue}) => {
+         try{
+             const res = await freelancerDeleteGigApi(gigId)
+             return res.data
+         }catch(error : any){
+             return rejectWithValue(error.response?.data?.message || 'Gig Update Failed !');
+         }
+    }
+ )
+ export const freelancerGetAllCategory = createAsyncThunk('freelancer/get-all-category',
+    async(_,{rejectWithValue}) => {
+         try{
+             const res = await freelancerGetAllCategoryApi()
+             return res.data
+         }catch(error : any){
+             return rejectWithValue(error.response?.data?.message || 'Gig Update Failed !');
          }
     }
  )
@@ -119,6 +142,36 @@ const manageGigSlice = createSlice({
             state.error = null;
         })
         .addCase(freelancerEditGig.rejected,(state, action:PayloadAction<any>) => {
+            state.error = action.payload;
+            state.loading = false;
+        })
+        // Delete gig
+        .addCase(freelancerDeleteGig.pending,(state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(freelancerDeleteGig.fulfilled,(state, action:PayloadAction<IGig>) => {
+            const {_id} = action.payload;
+            state.gigs = state.gigs.filter((gig : IGig) => gig._id !== _id)
+            state.loading = false;
+            state.error = null;
+        })
+        .addCase(freelancerDeleteGig.rejected,(state, action:PayloadAction<any>) => {
+            state.error = action.payload;
+            state.loading = false;
+        })
+
+        // Get all categorys
+        .addCase(freelancerGetAllCategory.pending,(state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(freelancerGetAllCategory.fulfilled,(state, action:PayloadAction<ICategory[]>) => {
+            state.categorys = action.payload
+            state.loading = false;
+            state.error = null;
+        })
+        .addCase(freelancerGetAllCategory.rejected,(state, action:PayloadAction<any>) => {
             state.error = action.payload;
             state.loading = false;
         })

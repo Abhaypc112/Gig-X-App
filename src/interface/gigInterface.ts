@@ -13,14 +13,26 @@ export interface IGigPricing {
     };
   }
 
+  export interface IGigOwner {
+    _id:string;
+    name:string;
+    role:string;
+  }
+
+
 export interface IGig {
     _id: string;
     gigName: string;
+    gigOwner:IGigOwner;
     gigCategory: string;
     gigDescription: string;
     gigPricing: IGigPricing;
     gigImages: [string];
     gigSearchTags: string;
-    isBlock?: boolean;
+    isBlock: boolean;
     isActive?: boolean;
+}
+export interface ICategory {
+    _id:string;
+    gigCategory:string;
 }

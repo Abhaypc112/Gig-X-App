@@ -36,7 +36,7 @@ const AdminHandleGigs = () => {
           <div className="table-heading w-[100%] glass h-14 rounded-md">
              <tr className="w-[100%] flex  items-center h-14 px-5 text-center">
                 <td className="w-[30%] font-bold">GIGS</td>
-                <td className="w-[20%] font-bold">TOTAL ORDERS</td>
+                <td className="w-[20%] font-bold">GIG OWNER</td>
                 <td className="w-[20%] font-bold">STATUS</td>
                 <td className="w-[20%] font-bold">BLOCK</td>
                 <td className="w-[20%] font-bold">VIEW</td>
@@ -48,7 +48,7 @@ const AdminHandleGigs = () => {
                   <div className="table-data w-[100%] border h-14 rounded-md">
                      <tr className="w-[100%] flex items-center h-14 px-5 ">
                         <td className="w-[30%] space-x-3"><input type="checkbox"/><span >{gig.gigName}</span></td>
-                        <td className="w-[20%] text-center">20</td>
+                        <td className="w-[20%] text-center">{gig.gigOwner.name}</td>
                         <td className="w-[20%] text-center"><button className=" w-[5rem] p-1 rounded-sm"> {gig.isActive?"Active":"Inactive"} </button></td>
                         <td className="w-[20%] text-center"><button onClick={()=>handleGig(gig._id)} className="glass w-[5rem] p-1 rounded-sm">{gig.isBlock ? "Unblock" : "Block"}</button></td>
                         <td className="w-[20%] text-center"><button className="glass w-[5rem] p-1 rounded-sm "> View </button></td>

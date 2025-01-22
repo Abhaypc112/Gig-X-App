@@ -17,3 +17,11 @@ export const freelancerEditGigApi = async(FormData : FormData) => {
    const res = await axiosInstance.post('/freelancer/edit-gig',FormData);
    return res;
 }
+export const freelancerDeleteGigApi = async(gigId : object) => {
+   const res = await axiosInstance.patch('/freelancer/delete-gig',gigId);
+   return res;
+}
+export const freelancerGetAllCategoryApi = async() => {
+   const res = await axiosInstance.get('/freelancer/get-all-category');
+   return res;
+}

@@ -10,7 +10,6 @@ function AdminNav() {
   const navigate = useNavigate();
   const [logOutModal,setLogOutModal] = useState(false);
   const location = useLocation()
-  console.log(location.pathname)
 
   const handleLogOut = async() => {
     await dispatch(userLogOut())

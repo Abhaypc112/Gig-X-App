@@ -26,7 +26,7 @@ export const adminBlockUser = createAsyncThunk('admin/update-user',
     async(userId : object,{rejectWithValue}) => {
     try{
         const res = await adminBlockUserApi(userId);
-        return res.data;
+        return res.data.user;
     }catch(error:any){
         return rejectWithValue(error.response?.data?.message || 'User not fount');
     }

@@ -4,8 +4,8 @@ import UserViewOrders from "../../pages/user/UserViewOrders";
 import UserViewPayment from "../../pages/user/UserViewPayment";
 
 export const UserRoutes = [
-    {path:"/user/home", element:<Home/>},
-    {path:"/user/view-gig", element:<UserViewGig/>},
-    {path:"/user/payment", element:<UserViewPayment/>},
-    {path:"/user/orders", element:<UserViewOrders/>}
+    {path:"/home", element:<Home/>},
+    {path:"/view-gig/:gigId", element:<UserViewGig/>},
+    {path:"/payment/:gigId/:gigPlan", element:<UserViewPayment/>},
+    {path:"/orders", element:<UserViewOrders/>}
 ];

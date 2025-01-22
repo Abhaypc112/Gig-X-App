@@ -19,7 +19,7 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(()=>{
-    if(role === "user")navigate('/user/home') 
+    if(role === "user")navigate('/home') 
     if(role === "freelancer")navigate('/freelancer/dashboard') 
     if(role === "admin")navigate('/admin/dashboard') 
   },[role])

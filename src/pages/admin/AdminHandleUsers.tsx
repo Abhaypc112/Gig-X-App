@@ -49,7 +49,7 @@ const AdminHandleUsers = () => {
                return(
                   <div className="table-data w-[100%] border h-14 rounded-md">
                      <tr className="w-[100%] flex items-center h-14 px-5 ">
-                        <td className="w-[30%] space-x-3"><input type="checkbox"/><span >{user.name}</span></td>
+                        <td className="w-[30%] space-x-3 flex items-center"><img className="w-10 h-10 rounded-full" src="https://via.placeholder.com/56x56" alt="profile-image" /><span >{user.name}</span></td>
                         <td className="w-[20%] text-center">20</td>
                         <td className="w-[20%] text-center">{user.role}</td>
                         <td className="w-[20%] text-center"><button onClick={()=>handleUser(user._id)} className="glass w-[5rem] p-1 rounded-sm">{user.isBlock ? "Unblock" : "Block"}</button></td>

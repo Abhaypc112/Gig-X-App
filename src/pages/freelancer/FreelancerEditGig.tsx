@@ -153,9 +153,9 @@ const FreelancerEditGig = () => {
             <span className="w-[25%] text-sm">Premium</span>
           </div>
           <div className="flex justify-evenly ">
-            <input onChange={(event)=>handleGigPricing(event,"basic","price")} value={Number(gigData?.gigPricing.basic.price)} type="number" placeholder='Price' name='basicPrice'  className='w-[25%] h-[55px] rounded-lg bg-transparent border p-5'/>
-            <input onChange={(event)=>handleGigPricing(event,"standerd","price")} value={Number(gigData?.gigPricing.standerd.price)} type="number" placeholder='Price' name='standardPrice'  className='w-[25%] h-[55px] rounded-lg bg-transparent border p-5'/>
-            <input onChange={(event)=>handleGigPricing(event,"premium","price")} value={Number(gigData?.gigPricing.premium.price)}type="number" placeholder='Price' name='premiumPrice'  className='w-[25%] h-[55px] rounded-lg bg-transparent border p-5'/>
+            <input onChange={(event)=>handleGigPricing(event,"basic","price")} value={gigData?.gigPricing.basic.price} type="number" placeholder='Price' name='basicPrice'  className='w-[25%] h-[55px] rounded-lg bg-transparent border p-5'/>
+            <input onChange={(event)=>handleGigPricing(event,"standerd","price")} value={gigData?.gigPricing.standerd.price} type="number" placeholder='Price' name='standardPrice'  className='w-[25%] h-[55px] rounded-lg bg-transparent border p-5'/>
+            <input onChange={(event)=>handleGigPricing(event,"premium","price")} value={gigData?.gigPricing.premium.price}type="number" placeholder='Price' name='premiumPrice'  className='w-[25%] h-[55px] rounded-lg bg-transparent border p-5'/>
           </div>
           <div className="flex justify-evenly">
             <input onChange={(event)=>handleGigPricing(event,"basic","time")} value={gigData?.gigPricing.basic.time} type="text" placeholder='Time' name='basicTime'  className='w-[25%] h-[55px] rounded-lg bg-transparent border p-5'/>

@@ -1,7 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useEffect, useState } from "react";
+import { userGetAllGigs } from "../../redux/slices/user/homeSlice";
+import { IGigPlan, IOrder } from "../../interface/orderInterface";
+import { useGetOrdersByUserId, userCreateOrder } from "../../redux/slices/user/orderSlice";
+import LoadingPage from "../../components/LoadingPage";
 
 const UserViewGig = () => {
+    const {gigId} = useParams();
+    const dispatch = useAppDispatch();
+    const {gigs,loading} = useAppSelector((state)=>state.user.userHome);
+    const {orders,error} = useAppSelector((state)=>state.user.userOrder);
+    const order = orders.find((order)=> order.gigId?._id === gigId);
+    const gig = gigs.find((gig)=>gig._id === gigId);
     const navigate = useNavigate();
+    const [imgIndex,setImgIndex] = useState(0);
+    const [pricePlan,setPricePlan] = useState("basic")
+    
+    useEffect(()=>{
+        dispatch(useGetOrdersByUserId());
+        dispatch(userGetAllGigs());
+    },[dispatch])
+
     const totalReviews = 159;
     const ratings = [
       { stars: 5, count: 100 },
@@ -12,7 +32,45 @@ const UserViewGig = () => {
     ];
   
     const averageRating = 4.8;
-  
+
+    const handeleOrder = async (gigId :any) => {
+        if(order) {
+            alert("Go orders");
+            navigate('/orders');
+            return
+        }
+        if(pricePlan === "basic"){
+            const gigPlan : IGigPlan = {
+                plan:"basic",
+                price:gig?.gigPricing.basic.price || 0,
+                time:gig?.gigPricing.basic.time || ""
+            }
+            const orderData : IOrder = {gigId,gigPlan,paymentStatus:false}
+            await dispatch(userCreateOrder(orderData))
+        } 
+        if(pricePlan === "standerd"){
+            const gigPlan : IGigPlan = {
+                plan:"standerd",
+                price:gig?.gigPricing.standerd.price || 0,
+                time:gig?.gigPricing.standerd.time || ""
+            }
+            const orderData : IOrder = {gigId,gigPlan,paymentStatus:false}
+            await dispatch(userCreateOrder(orderData))
+        } 
+        if(pricePlan === "premium"){
+            const gigPlan : IGigPlan = {
+                plan:"premium",
+                price:gig?.gigPricing.premium.price || 0,
+                time:gig?.gigPricing.premium.time || ""
+            }
+            const orderData : any = {gigId,gigPlan}
+            await dispatch(userCreateOrder(orderData))
+        } 
+        if(!error) navigate(`/payment/${gigId}/${pricePlan}`)
+    }
+    if(loading) {
+        return <LoadingPage/>
+      }
   return (
     <div className="flex justify-center">
       <div className="grid grid-cols-3 h-screen w-[90%] mt-[9rem] relative">
@@ -30,39 +88,33 @@ const UserViewGig = () => {
         </div>
         <div className=" col-span-2 space-y-10">
             <div className="space-y-5">
-                <h1 className="text-3xl font-bold">I will design a modern minimalist logo</h1>
+                <h1 className="text-3xl font-bold">{gig?.gigDescription}</h1>
                 <div className="flex space-x-3">
                     <img className="w-14 h-14 rounded-full" src="https://fiverr-res.cloudinary.com/image/upload/t_profile_original,q_auto,f_auto/v1/attachments/profile/photo/6ffaddf02ac2446c4483f308e92428c5-1556216315452/c6d0501e-a3f0-4b18-a47a-24b6085c9246.jpg" alt="profile" />
                     <div className="flex flex-col">
-                        <span className="font-bold">Listypop</span>
+                        <span className="font-bold">{gig?.gigOwner.name}</span>
                         <span>⭐ 4.8 <span className="text-sm">(123 reviews)</span></span>
                     </div>
                 </div>
                 <div className="space-y-5">
-                    <img className="w-[80%] h-[20rem] rounded-lg" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="gig-img" />
+                    <img className="w-[80%] h-[25rem] rounded-lg" src={gig?.gigImages[imgIndex]} alt="gig-img" />
                     <div className="flex w-[80%] space-x-5 overflow-x-auto scroll-icon-none">
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
-                        <img className="w-32 h-20 rounded-md" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/127707871/original/58036eaa037a90f7230bfc551916036a455c3e4b/design-modern-minimalist-business-logo.jpg" alt="" />
+                        {
+                            gig?.gigImages.map((image,index) => {
+                                return(
+                                    <img onClick={()=>setImgIndex(index)} className="w-32 h-20 rounded-md" src={image} alt={`${index}-image`} />
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>
             <div className="about-gig w-[80%] flex flex-col space-y-5">
                 <h1 className="text-2xl font-bold">About this gig</h1>
                 <span>
-                Hi,
-                Are you seeking a clean and modern minimalist logo to elevate your brand's identity? You've come to the right place!
-                I'm Alvish, a graphic designer based in India, specializing in Minimalist Logo Design and Branding. With over 700 projects completed on Fiverr and a dedication to perfection, I'm here to give your brand the boost it deserves.
-                Why choose me?
-                - Fast Communication & Better Service: I prioritize clear communication and timely delivery.
-                - Minimalist Logo Design Specialist: I'm dedicated to creating clean and timeless designs.
-                - High-Quality and 100% Satisfaction Guaranteed: Your satisfaction is my top priority.
-                - Copyrights: You'll own the copyrights to the final design.
+                {
+                    gig?.gigDescription
+                }
                 </span>
             </div>
             <div className="reviews w-[80%]">
@@ -113,31 +165,74 @@ const UserViewGig = () => {
             </div>
         </div>
         <div className="continue right-20 fixed col-span-1 ">
-            <div className="glass w-[30rem] h-[33rem] rounded-xl flex flex-col items-center p-5 justify-between">
-                   <div className="">
+            <div className="glass w-[27rem] h-[33rem] rounded-xl flex flex-col items-center p-5 justify-between">
+                   <div className="flex flex-col justify-between w-full h-[25rem]">
                    <div className="plans flex justify-between w-full text-center">
-                        <div className="w-[30%] glass p-4 rounded-md">Basic</div>
-                        <div className="w-[30%] glass p-4 rounded-md">Standerd</div>
-                        <div className="w-[30%] glass p-4 rounded-md">Premium</div>
+                        <div onClick={()=>setPricePlan("basic")} className="w-[30%] glass p-4 rounded-md">Basic</div>
+                        <div onClick={()=>setPricePlan("standerd")} className="w-[30%] glass p-4 rounded-md">Standerd</div>
+                        <div onClick={()=>setPricePlan("premium")} className="w-[30%] glass p-4 rounded-md">Premium</div>
                     </div>
-                    <div className="discription w-fullf flex flex-col gap-10">
+                    {
+                        pricePlan === "basic" && (
+                            <div className="discription w-full flex flex-col justify-evenly h-[20rem]">
                         <div className="font-bold w-full flex justify-between items-center">
                             <span>Playful Beginnings</span>
-                            <span className="text-3xl">₹ 699</span>
+                            <span className="text-3xl">₹ {gig?.gigPricing.basic.price}</span>
                         </div>
                         <div className="flex flex-col gap-10">
-                            <span>1 unique logo concept - High-resolution JPG and Transparent background file (PNG)</span>
+                            <span> {gig?.gigName}</span>
                             <div className="flex justify-between">
-                                <span>Valid Up to : 5 Days</span>
-                                <span>Max  : 15 Works</span>
+                                <span>Valid Up to : {gig?.gigPricing.basic.time}</span>
+                                <span>Owner  : {gig?.gigOwner.name}</span>
+                            </div>
+                            <div>
+
+                                </div>
+                            </div>
+                        </div>
+                        )
+                    }{
+                        pricePlan === "standerd" && (
+                            <div className="discription w-full flex flex-col justify-evenly h-[20rem]">
+                            <div className="font-bold w-full flex justify-between items-center">
+                                <span>Playful Beginnings</span>
+                                <span className="text-3xl">₹ {gig?.gigPricing.standerd.price}</span>
+                            </div>
+                            <div className="flex flex-col gap-10">
+                                <span> {gig?.gigName}</span>
+                                <div className="flex justify-between">
+                                    <span>Valid Up to : {gig?.gigPricing.standerd.time}</span>
+                                    <span>Owner  : {gig?.gigOwner.name}</span>
+                                </div>
+                                <div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                    {
+                        pricePlan === "premium" && (
+                            <div className="discription w-full flex flex-col justify-evenly h-[20rem]">
+                        <div className="font-bold w-full flex justify-between items-center">
+                            <span>Playful Beginnings</span>
+                            <span className="text-3xl">₹ {gig?.gigPricing.premium.price}</span>
+                        </div>
+                        <div className="flex flex-col gap-10">
+                            <span> {gig?.gigName}</span>
+                            <div className="flex justify-between">
+                                <span>Valid Up to : {gig?.gigPricing.premium.time}</span>
+                                <span>Owner  : {gig?.gigOwner.name}</span>
                             </div>
                             <div>
 
                             </div>
                         </div>
                     </div>
+                        )
+                    }
                    </div>
-                    <button onClick={()=>navigate('/user/payment')} className="w-full glass p-4 rounded-md font-bold">Continue</button>
+                    <button onClick={()=>handeleOrder(gig?._id)} className="w-full glass p-4 rounded-md font-bold">Continue</button>
             </div>
         </div>
       </div>
