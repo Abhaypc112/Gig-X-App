@@ -16,4 +16,8 @@ export const adminBlockGigApi = async (gigId : object) => {
     const res = await axiosInstance.patch('/admin/block-gig',gigId);
     return res
 }
+export const adminGetAllOrdersApi = async () => {
+    const res = await axiosInstance.get('/admin/get-all-orders');
+    return res
+}
 

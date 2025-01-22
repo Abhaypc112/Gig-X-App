@@ -25,7 +25,7 @@ function Signup () {
   const {loading,error} = useSelector((state:RootState)=>state.auth)
   const navigate = useNavigate();
   const {option} = useParams();
-
+  console.log(signupData)
 
   useEffect(()=>{
     if(UserRole === "user")navigate('/home') 
@@ -82,15 +82,26 @@ function Signup () {
              <span className='text-neutral-400'>I agree to the</span><span><b>Terms & Conditions</b></span>
            </div>
            <button type='button' onClick={handleSignUp} className='w-[80%] h-[63px] rounded-lg  bg-yellow-500 font-bold text-xl text-black'>Sign Up</button>
-           <GoogleLogin
-              onSuccess={async(credentialResponse) => {
-                let data = {credentialResponse,signupData}
-                await axios.post('http://localhost:5000/api/auth/google',data)
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-            />
+           <div className='w-[80%] h-[63px]'>
+            <GoogleLogin 
+                onSuccess={async(credentialResponse) => {
+                  let data = {credentialResponse,option}
+                  await axios.post('http://localhost:5000/api/auth/google',data)
+                  .then((res)=>{
+                        const {accessToken,user} = res.data.userData;
+                        localStorage.setItem('accessToken', accessToken);
+                        localStorage.setItem('role', user.role);
+                        localStorage.setItem('userName', user.name);
+                        localStorage.setItem('profileImg', user.profileImg);
+                        if(user.role === "user")navigate('/home') 
+                        if(user.role === "freelancer")navigate('/freelancer/dashboard') 
+                      })
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+              />
+           </div>
            <div className='text-white space-x-3'><span className='text-neutral-400'>I have a account</span> <NavLink to='/login'><span className='cursor-pointer'><b>LogIn?</b></span></NavLink></div>
          </form>
        </div>
@@ -111,7 +122,8 @@ function Signup () {
               <button type='submit' className='w-[80%] h-[63px] rounded-lg  bg-yellow-500 font-bold text-xl text-black'>Verify OTP</button>
               <GoogleLogin
                 onSuccess={async(credentialResponse) => {
-                  const post = await axios.post('http://localhost:5000/api/auth/google', credentialResponse)
+                  let data = {credentialResponse,option}
+                  const post = await axios.post('http://localhost:5000/api/auth/google',data)
                   console.log(post)
                 }}
                 onError={() => {

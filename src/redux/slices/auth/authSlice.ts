@@ -101,6 +101,8 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         localStorage.setItem('accessToken', action.payload.accessToken);
         localStorage.setItem('role', action.payload.user.role);
+        localStorage.setItem('userName', action.payload.user.name);
+        localStorage.setItem('profileImg', action.payload.user.profileImg);
       })
       .addCase(signupUser.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
@@ -115,9 +117,12 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.user = action.payload.user;
+        console.log(action.payload)
         state.accessToken = action.payload.accessToken;
         localStorage.setItem('accessToken', action.payload.accessToken);
         localStorage.setItem('role', action.payload.user.role);
+        localStorage.setItem('userName', action.payload.user.name);
+        localStorage.setItem('profileImg', action.payload.user.profileImg);
       })
       .addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
@@ -147,7 +152,8 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('role');
+        localStorage.removeItem('role');     
+        localStorage.removeItem('userName');     
       })
       .addCase(userLogOut.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;

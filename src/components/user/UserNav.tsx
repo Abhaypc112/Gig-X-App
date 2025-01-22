@@ -14,6 +14,7 @@ const UserNav = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [logOutModal,setLogOutModal] = useState(false);
+  const userName = localStorage.getItem('userName');
   
   const handleLogOut = async() => {
     await dispatch(userLogOut())
@@ -41,7 +42,7 @@ const UserNav = () => {
             <div onClick={()=>setLogOutModal(!logOutModal)} className='w-[260px] h-[65px] bg-[#575757] rounded-md flex justify-between px-3 items-center '>
             <div>
                 <p className='text-xs'>Hello, Good Morning</p>
-                <div className=" text-white  font-semibold ">Freelancer</div>
+                <div className=" text-white  font-semibold ">{userName}</div>
                 {
                   logOutModal?(
                     <div className='w-[16rem] h-[8rem] bg-black rounded-md z-50 absolute top-20 left-0 font-bold flex flex-col justify-evenly items-center'>

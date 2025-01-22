@@ -1,11 +1,12 @@
 import NamedLogo from '../../assets/NamedLogo.svg';
-import Google from '../../assets/Google.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../redux/slices/auth/authSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { LoginVlidation } from '../../validation/LoginValidation';
+import { GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 function Login() {
   const [loginData,setLoginData] = useState ({
@@ -59,7 +60,26 @@ function Login() {
                 <span className='text-neutral-400  w-[100%] flex justify-between'><span>Remember me</span><span className='cursor-pointer'>Forget password ?</span></span>
               </div>
               <button type='submit' className='w-[80%] h-[63px] rounded-lg  bg-yellow-500 font-bold text-xl text-black'>Login</button>
-              <button type='button' className='w-[80%] h-[63px] rounded-lg  border font-bold text-xl flex justify-center items-center space-x-3 text-white'><img src={Google} alt="google" /><span>Continue with Google</span></button>
+              <div className='w-[80%]'>
+              <GoogleLogin
+                  onSuccess={async(credentialResponse) => {
+                    let data = {credentialResponse}
+                    await axios.post('http://localhost:5000/api/auth/google',data)
+                    .then((res)=>{
+                      const {accessToken,user} = res.data.userData;
+                      localStorage.setItem('accessToken', accessToken);
+                      localStorage.setItem('role', user.role);
+                      localStorage.setItem('userName', user.name);
+                      localStorage.setItem('profileImg', user.profileImg);
+                      if(user.role === "user")navigate('/home') 
+                      if(user.role === "freelancer")navigate('/freelancer/dashboard') 
+                    })
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                />
+              </div>
               <div className='text-white space-x-3'><span className='text-neutral-400'>I have a account</span><NavLink to='/option'><span className='cursor-pointer'><b>Sign Up?</b></span></NavLink></div>
             </form>
           </div>
