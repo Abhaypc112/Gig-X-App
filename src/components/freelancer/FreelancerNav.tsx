@@ -1,17 +1,17 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import NavLogo from '../../assets/NavLogo.svg';
 import SearchIcon from '../../assets/Searchicon.svg';
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/hooks";
 import { useState } from "react";
 import { userLogOut } from "../../redux/slices/auth/authSlice";
 
 
 const FreelancerNav = () => {
   const [logOutModal,setLogOutModal] = useState(false);
-  const {user} = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  console.log(user)
+  const profileImg = localStorage.getItem('profileImg');
+  const userName = localStorage.getItem('userName');
 
   const handleLogOut = async() => {
     await dispatch(userLogOut())
@@ -40,7 +40,7 @@ const FreelancerNav = () => {
             <div onClick={()=>setLogOutModal(!logOutModal)} className='w-[260px] h-[65px] bg-[#575757] rounded-md flex justify-between px-3 items-center '>
             <div>
                 <p className='text-xs'>Hello, Good Morning</p>
-                <div className=" text-white  font-semibold ">Freelancer</div>
+                <div className=" text-white  font-semibold ">{userName}</div>
                 {
                   logOutModal?(
                     <div className='w-[16rem] h-[8rem] bg-black rounded-md z-50 absolute top-20 left-0 font-bold flex flex-col justify-evenly items-center'>
@@ -52,7 +52,7 @@ const FreelancerNav = () => {
                   )
                 }
             </div>
-            <img className="w-[56.22px] h-[56.22px] rounded-full" src="https://via.placeholder.com/56x56" />
+            <img className="w-[56.22px] h-[56.22px] rounded-full" src={profileImg || "https://via.placeholder.com/56x56"} />
             </div>
         </div>
       </div>

@@ -20,4 +20,20 @@ export const adminGetAllOrdersApi = async () => {
     const res = await axiosInstance.get('/admin/get-all-orders');
     return res
 }
+export const adminGetAllCategoryApi = async () => {
+    const res = await axiosInstance.get('/admin/get-all-category');
+    return res
+}
+export const adminAddCategoryApi = async (category:FormData) => {
+    const res = await axiosInstance.post('/admin/add-category',category);
+    return res
+}
+export const adminEditCategoryApi = async (category:FormData) => {
+    const res = await axiosInstance.patch('/admin/edit-category',category);
+    return res
+}
+export const adminDeleteCategoryApi = async (categoryId:string) => {
+    const res = await axiosInstance.delete(`/admin/delete-category/${categoryId}`);
+    return res
+}
 

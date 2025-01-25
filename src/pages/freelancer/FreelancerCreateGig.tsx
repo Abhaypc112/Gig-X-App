@@ -33,7 +33,7 @@ const FreelancerCreateGig = () => {
 
   const dispatch = useAppDispatch();
   const {loading,categorys} = useAppSelector((state) => state.freelancer.freelancerGigManagement);
-  console.log(gigData)
+
   useEffect(()=>{
     dispatch(freelancerGetAllCategory())
   },[dispatch])
@@ -67,7 +67,7 @@ const FreelancerCreateGig = () => {
   const handleSelect = (event : React.ChangeEvent<HTMLSelectElement>) => {
     setGigData({...gigData,gigCategory:event.target.value})
   }
-
+  console.log(gigData)
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files);
@@ -109,6 +109,7 @@ return (
         <input type="text" onChange={handleOnChange} value={gigData?.gigName} placeholder='Gig name' name='gigName'  className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/>
         {/* <input type="text" onChange={handleOnChange} value={gigData?.gigCategory} placeholder='Category' name='gigCategory'  className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/> */}
         <select name="" id="gigCategory" onChange={handleSelect} className='w-[90%] bg-transparent h-[55px] border rounded-md px-5'>
+        <option value="" className="bg-black">Select Category</option>
           {categorys && categorys.map((category)=>{
             return(
               <option value={category._id} className="bg-black">{category.gigCategory}</option>

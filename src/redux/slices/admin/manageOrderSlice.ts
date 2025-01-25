@@ -19,7 +19,7 @@ export const adminGetAllOrders = createAsyncThunk('admin/get-all-orders',
              const res = await adminGetAllOrdersApi()
              return res.data.orders
          }catch(error : any){
-             return rejectWithValue(error.response?.data?.message || 'Orders not fount !');
+             return rejectWithValue(error.response?.data?.message || 'Orders not found !');
          }
     }
  );

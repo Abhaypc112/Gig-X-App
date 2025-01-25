@@ -15,6 +15,7 @@ const UserNav = () => {
   const navigate = useNavigate();
   const [logOutModal,setLogOutModal] = useState(false);
   const userName = localStorage.getItem('userName');
+  const profileImg = localStorage.getItem('profileImg');
   
   const handleLogOut = async() => {
     await dispatch(userLogOut())
@@ -34,7 +35,7 @@ const UserNav = () => {
             <ul className='flex justify-end space-x-5 w-[300px] '>
               <NavLink to='/orders'><MdOutlineShoppingCart className='w-12 h-12 bg-[#222222] p-3 rounded-full'/></NavLink>
               <FaRegHeart className='w-12 h-12 bg-[#222222] p-3 rounded-full'/>
-              <MdOutlineMail className='w-12 h-12 bg-[#222222] p-3 rounded-full' />
+              <NavLink to='/chat'><MdOutlineMail className='w-12 h-12 bg-[#222222] p-3 rounded-full' /></NavLink>
               <IoNotificationsOutline className='w-12 h-12 bg-[#222222] p-3 rounded-full' />
             </ul>
         </div>
@@ -54,7 +55,7 @@ const UserNav = () => {
                   )
                 }
             </div>
-            <img className="w-[56.22px] h-[56.22px] rounded-full" src="https://via.placeholder.com/56x56" />
+            <img className="w-[56.22px] h-[56.22px] rounded-full" src={profileImg || "https://via.placeholder.com/56x56"} />
             </div>
         </div>
       </div>

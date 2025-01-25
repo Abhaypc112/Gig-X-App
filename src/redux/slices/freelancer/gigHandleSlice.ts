@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICategory, IGig } from "../../../interface/gigInterface";
+import { ICategory } from "../../../interface/categoryInterface";
 import { freelancerCreateGigApi, freelancerDeleteGigApi, freelancerEditGigApi, freelancerGetAllCategoryApi, freelancerGetAllGigsApi, freelancerUpdateGigStatausApi } from "../../../api/FreelancerApi";
+import { IGig } from "../../../interface/gigInterface";
 
 
 interface IHandleGig {

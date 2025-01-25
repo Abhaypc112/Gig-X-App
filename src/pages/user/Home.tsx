@@ -25,14 +25,16 @@ const Home = () => {
               <div className="flex gap-5  w-full" >
                 {
                   categotys?.map((categoty)=>{
-                    return(
-                      <div className="w-[12rem] h-[15rem] bg-black rounded-md flex flex-col justify-evenly items-center">
-                        <h1 className="font-bold text-lg">{categoty.gigCategory}</h1>
-                        <img className="w-[10rem] h-[10rem] rounded-md" src="https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156473/architecture-design.png" alt="" />
-                      </div>
-                    )
-                  })
-                }
+                    if(categoty.isActive){
+                      return(
+                        <div className="w-[12rem] h-[15rem] bg-black rounded-md flex flex-col justify-evenly items-center">
+                          <h1 className="font-bold text-lg">{categoty.gigCategory}</h1>
+                          <img className="w-[10rem] h-[10rem] rounded-md" src={categoty.image} alt="" />
+                        </div>
+                      )
+                    }
+                    })
+                    }
               </div>
             </div>   
         </div>

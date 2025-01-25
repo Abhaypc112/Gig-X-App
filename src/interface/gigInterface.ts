@@ -32,7 +32,3 @@ export interface IGig {
     isBlock: boolean;
     isActive?: boolean;
 }
-export interface ICategory {
-    _id:string;
-    gigCategory:string;
-}
