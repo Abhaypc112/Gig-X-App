@@ -1,3 +1,5 @@
+import { ICategory } from "./categoryInterface";
+
 export interface IGigPricing {
     basic: {
       price: number;
@@ -24,7 +26,7 @@ export interface IGig {
     _id: string;
     gigName: string;
     gigOwner:IGigOwner;
-    gigCategory: string;
+    gigCategory: ICategory;
     gigDescription: string;
     gigPricing: IGigPricing;
     gigImages: [string];

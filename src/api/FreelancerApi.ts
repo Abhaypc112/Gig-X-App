@@ -25,3 +25,15 @@ export const freelancerGetAllCategoryApi = async() => {
    const res = await axiosInstance.get('/freelancer/get-all-category');
    return res;
 }
+export const freelancerGetOrdersApi = async() => {
+   const res = await axiosInstance.get('/freelancer/get-all-orders');
+   return res;
+}
+export const freelancerGetByIdApi = async() => {
+   const res = await axiosInstance.get('/freelancer/get-by-id');
+   return res;
+}
+export const freelancerEditByIdApi = async(formData : FormData) => {
+   const res = await axiosInstance.patch('/freelancer/edit-by-id',formData);
+   return res;
+}

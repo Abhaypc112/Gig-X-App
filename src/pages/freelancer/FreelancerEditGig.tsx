@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import LoadingPage from "../../components/LoadingPage";
 import { useNavigate, useParams } from "react-router-dom";
-import { freelancerEditGig, freelancerGetAllGigs } from "../../redux/slices/freelancer/gigHandleSlice";
+import { freelancerEditGig, freelancerGetAllCategory, freelancerGetAllGigs } from "../../redux/slices/freelancer/gigHandleSlice";
 
 type PricingType = "basic" | "standerd" | "premium";
 
@@ -22,6 +22,7 @@ const FreelancerEditGig = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { gigs, loading } = useAppSelector((state) => state.freelancer.freelancerGigManagement);
+  const {categorys} = useAppSelector((state) => state.freelancer.freelancerGigManagement);
   const { gigId } = useParams();
   const oldgig = gigs.find((gig) => gig._id === gigId);
 
@@ -29,7 +30,7 @@ const FreelancerEditGig = () => {
     if (oldgig) {
       setGigData({
         gigName: oldgig.gigName || '',
-        gigCategory: oldgig.gigCategory || '',
+        gigCategory: oldgig.gigCategory.gigCategory || '',
         gigDescription: oldgig.gigDescription || '',
         gigPricing: oldgig.gigPricing || {
           basic: { price: 0, time: '' },
@@ -42,8 +43,13 @@ const FreelancerEditGig = () => {
     }
   }, [oldgig]);
   useEffect(() => {
+    dispatch(freelancerGetAllCategory())
     dispatch(freelancerGetAllGigs());
   }, [dispatch]);
+  
+  const handleSelect = (event : React.ChangeEvent<HTMLSelectElement>) => {
+    setGigData({...gigData,gigCategory:event.target.value})
+  }
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -92,6 +98,7 @@ const FreelancerEditGig = () => {
     
   }
 
+
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -108,7 +115,8 @@ const FreelancerEditGig = () => {
         formData.append("data",jsonPayload);
         images.forEach((file) => formData.append("gigImages", file));
         await dispatch(freelancerEditGig(formData));
-        navigate('/freelancer/handle-gigs')
+        // navigate('/freelancer/handle-gigs')
+        navigate(-1)
       };
     
       if(loading) {
@@ -122,7 +130,14 @@ const FreelancerEditGig = () => {
         <form onSubmit={handleOnSubmit} className="lg:flex-row flex flex-col lg:space-y-0 space-y-5" method="post">
           <div className=" space-y-10 flex flex-col lg:w-[50%] items-center">
             <input type="text" onChange={handleOnChange} value={gigData?.gigName} placeholder='Gig name' name='gigName'  className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/>
-            <input type="text" onChange={handleOnChange} value={gigData?.gigCategory} placeholder='Category' name='gigCategory'  className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/>
+            <select name="" id="gigCategory" onSelect={handleSelect} className='w-[90%] bg-transparent h-[55px] border rounded-md px-5'>
+              <option  className="bg-black"> {gigData.gigCategory?gigData.gigCategory:"Select Category"}</option>
+              {categorys && categorys.map((category)=>{
+              return(
+                <option value={category._id} className="bg-black">{category.gigCategory}</option>
+                )
+              })}
+        </select>
             <textarea  onChange={handleOnChange} value={gigData?.gigDescription} placeholder="Discription" name="gigDescription" className='w-[90%] min-h-[205px] rounded-lg bg-transparent border p-5'></textarea>
             <div className='w-[90%] h-[55px] flex items-center justify-between space-x-10'>
               <div className="flex space-x-5 overflow-x-auto scroll-icon-none W-[90%]">
@@ -144,7 +159,9 @@ const FreelancerEditGig = () => {
               </div>
               <button onClick={handleDeleteImage} className="glass min-w-20 h-10 rounded-md">Delete</button>
             </div>
-            <input onChange={handleFileChange} type="file" placeholder='Images' name='gigImages' className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/>
+            <div className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5 flex items-center'>
+              <input onChange={handleFileChange} type="file" placeholder='Images' name='gigImages' />
+            </div>
           </div>
           <div className=" space-y-10 lg:w-[50%] ">
           <div className="flex justify-evenly">

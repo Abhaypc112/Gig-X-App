@@ -25,14 +25,12 @@ const Home = () => {
               <div className="flex gap-5  w-full" >
                 {
                   categotys?.map((categoty)=>{
-                    if(categoty.isActive){
                       return(
-                        <div className="w-[12rem] h-[15rem] bg-black rounded-md flex flex-col justify-evenly items-center">
+                        <div onClick={()=>navigate(`/all-gigs/${categoty.gigCategory}`)} className="w-[12rem] h-[15rem] bg-black rounded-md flex flex-col justify-evenly items-center">
                           <h1 className="font-bold text-lg">{categoty.gigCategory}</h1>
-                          <img className="w-[10rem] h-[10rem] rounded-md" src={categoty.image} alt="" />
+                          <img className="w-[10rem] h-[10rem] rounded-md" src={categoty.image} alt="category-image" />
                         </div>
                       )
-                    }
                     })
                     }
               </div>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoadingPage from "../../components/LoadingPage";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import moment from "moment";
@@ -9,7 +9,27 @@ const UserViewOrders = () => {
    const dispatch = useAppDispatch();
    const {orders,loading} = useAppSelector((state)=>state.user.userOrder);
    const naviagte = useNavigate();
+   const [filter, setFilter] = useState<boolean | null>(null);
+   const [filteredData,setFilteredData] = useState(orders);
+   const [searchTerm, setSearchTerm] = useState("");
    
+
+   useEffect(()=>{
+      let result = orders;
+
+      if(filter !== null){
+         result = result.filter((order)=> order.orderStatus === filter)
+      }
+
+      if(searchTerm.trim() !== ""){
+         result = result.filter((order)=>
+            order.gigId.gigName.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+            order?.userId?.name?.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+         )
+      }
+      setFilteredData(result);
+   },[orders,filter,searchTerm])
+
    useEffect(()=>{
       dispatch(useGetOrdersByUserId())
    },[dispatch])
@@ -28,13 +48,13 @@ const UserViewOrders = () => {
       <div className=" flex flex-col min-h-screen p-5 space-y-6 w-[90%]">
       <div className="top-side flex justify-between mt-[9rem]">
         <div className="options w-[100%] space-x-5 font-bold ">
-            <button className="glass px-5 p-3 rounded-md text-xs">ALL</button>
-            <button className="glass px-5 p-3 rounded-md text-xs">COMPLETED</button>
-            <button className="glass px-5 p-3 rounded-md text-xs">ACTIVE</button>
-            <button className="glass px-5 p-3 rounded-md text-xs">PENDING</button>
+        <button onClick={()=>setFilter(null)} className={filter === null ? "glass px-5 p-3 rounded-md text-xs":"glass-btn px-5 p-3 rounded-md text-xs"}>ALL</button>
+            <button onClick={()=>setFilter(true)} className={filter === true ? "glass px-5 p-3 rounded-md text-xs":"glass-btn px-5 p-3 rounded-md text-xs"}>COMPLETED</button>
+            <button onClick={()=>setFilter(false)} className={filter === false ? "glass px-5 p-3 rounded-md text-xs":"glass-btn px-5 p-3 rounded-md text-xs"}>ACTIVE</button>
+            <button className="glass-btn px-5 p-3 rounded-md text-xs">BTN</button>
         </div>
         <div className="search ">
-            <input type="text" placeholder="Search" className="bg-transparent glass border-none focus:outline-none p-2 rounded-md " />
+        <input onChange={(e)=>setSearchTerm(e.target.value)} type="text" placeholder="Search" className="bg-transparent glass border-none focus:outline-none p-2 rounded-md " />
         </div>
       </div>
       <div className="bottum-side space-y-5 ">
@@ -49,7 +69,7 @@ const UserViewOrders = () => {
              </tr>
           </div>
           {
-            orders?.map((order,index)=>{
+            filteredData?.map((order,index)=>{
                return(
                   <div key={index} className="table-data w-[100%] border h-14 rounded-md">
                      <tr className="w-[100%] flex items-center h-14 px-5">

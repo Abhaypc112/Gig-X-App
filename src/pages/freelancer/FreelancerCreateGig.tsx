@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { createGig, freelancerGetAllCategory } from "../../redux/slices/freelancer/gigHandleSlice";
 import LoadingPage from "../../components/LoadingPage";
+import { useNavigate } from "react-router-dom";
 
 const field = {
   gigName: "",
@@ -33,6 +34,7 @@ const FreelancerCreateGig = () => {
 
   const dispatch = useAppDispatch();
   const {loading,categorys} = useAppSelector((state) => state.freelancer.freelancerGigManagement);
+  const navigate = useNavigate();
 
   useEffect(()=>{
     dispatch(freelancerGetAllCategory())
@@ -45,6 +47,7 @@ const FreelancerCreateGig = () => {
       [name]: value,
     }));
   };
+  
 
   const handleGigPricing = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -129,7 +132,9 @@ return (
           </div>
           <button onClick={handleDeleteImage} className="glass min-w-20 h-10 rounded-md">Delete</button>
         </div>
-        <input onChange={handleFileChange} type="file" placeholder='Images' name='gigImages' className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/>
+        <div className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5 flex items-center'>
+              <input onChange={handleFileChange} type="file" placeholder='Images' name='gigImages' />
+          </div>
       </div>
       <div className=" space-y-10 lg:w-[50%] ">
       <div className="flex justify-evenly">
@@ -152,7 +157,7 @@ return (
       </div>
      <div className="flex flex-col items-center space-y-10">
       <button className="glass text-xl font-bold px-10 p-3 rounded w-[88%] text-yellow-500">Post</button>
-      <button className="glass text-xl font-bold px-10 p-3 rounded w-[88%] text-red-500">Cancel</button>
+      <button onClick={()=> navigate(-1)} className="glass text-xl font-bold px-10 p-3 rounded w-[88%] text-red-500">Cancel</button>
      </div>
     </div>
     </form>

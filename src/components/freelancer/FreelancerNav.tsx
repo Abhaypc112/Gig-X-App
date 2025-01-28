@@ -1,6 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import NavLogo from '../../assets/NavLogo.svg';
-import SearchIcon from '../../assets/Searchicon.svg';
 import { useAppDispatch } from "../../hooks/hooks";
 import { useState } from "react";
 import { userLogOut } from "../../redux/slices/auth/authSlice";
@@ -23,17 +22,13 @@ const FreelancerNav = () => {
       <div className="nav w-[95%] h-[95px] bg-black rounded-3xl flex justify-between items-center px-5">
         <div className="left flex w-[500px] justify-between items-center">
             <img src={NavLogo} alt="NavLogo" className='h-[50px]'/>
-            <div className='relative hidden md:flex'>
-                <input type="text" className='w-[300px] h-[45px] rounded-md text-[#a9a9a9] bg-[#464646] focus:outline-none pl-3' placeholder='Search your design' />
-                <img src={SearchIcon} alt="search" className='absolute z-10 right-3 top-3'/>
-            </div>
         </div>
         <div className="center ">
-            <ul className='flex justify-between w-[300px]'>
-                <NavLink to="/freelancer/dashboard"><li className='cursor-pointer'>Dashboard</li></NavLink>
-                <NavLink to="/freelancer/handle-gigs"><li className='cursor-pointer'>Gigs</li></NavLink>
-                <NavLink to="/freelancer/handle-orders"><li className='cursor-pointer'>Orders</li></NavLink>
-                <NavLink to="/freelancer/profile"><li className='cursor-pointer'>Profile</li></NavLink>
+            <ul className='flex justify-between w-[250px] lg:w-[300px]'>
+              <NavLink to="/freelancer/dashboard"><li className={location.pathname === "/freelancer/dashboard"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Dashboard</li></NavLink>
+                <NavLink to="/freelancer/handle-gigs"><li className={location.pathname === "/freelancer/handle-gigs"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Gigs</li></NavLink>
+                <NavLink to="/freelancer/handle-orders"><li className={location.pathname === "/freelancer/handle-orders"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Orders</li></NavLink>
+                <NavLink to="/freelancer/profile"><li className={location.pathname === "/freelancer/profile"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Profile</li></NavLink>
             </ul>
         </div>
         <div className="right hidden lg:flex relative">

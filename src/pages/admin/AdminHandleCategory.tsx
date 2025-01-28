@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { adminAddCategory, adminDeleteCategory, adminEditCategory, adminGetAllCategory } from "../../redux/slices/admin/menageCategorySlice";
 import { ICategory } from "../../interface/categoryInterface";
-import ButtonLoading from "../../components/buttonLoading";
+import ButtonLoading from "../../components/ButtonLoading";
 
 const AdminHandleCategory = () => {
  const dispatch = useAppDispatch();
