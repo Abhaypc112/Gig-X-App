@@ -124,9 +124,9 @@ const AdminHandleCategory = () => {
                </div>
               {
                editId?( 
-                  <button onClick={handleOnSave}className="bg-yellow-500 w-20 p-1 px-3 rounded text-black">{loading?<ButtonLoading/>:"Save"}</button>
+                  <button onClick={handleOnSave}className="bg-yellow-500 w-20 p-1 px-3 rounded text-black">{loading?<ButtonLoading bg={{color:"#000000"}}/>:"Save"}</button>
                ):(
-                  <button onClick={handleOnSubmit}className="bg-yellow-500 w-20 p-1 px-3 rounded text-black">{loading?<ButtonLoading/>:"Create"}</button>
+                  <button onClick={handleOnSubmit}className="bg-yellow-500 w-20 p-1 px-3 rounded text-black">{loading?<ButtonLoading bg={{color:"#000000"}}/>:"Create"}</button>
                )
               }
               <button onClick={()=>setShowModal(false)} className=" glass p-1 px-3 rounded">Cancel</button>

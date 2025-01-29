@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { userCreateOrderApi, userGetAllCategorysApi, userGetAllGigsApi } from "../../../api/userApi";
-import { ICategory, IGig } from "../../../interface/gigInterface";
+import { IGig } from "../../../interface/gigInterface";
 import { IOrder } from "../../../interface/orderInterface";
+import { ICategory } from "../../../interface/categoryInterface";
 
 interface IHandleGig {
     gigs: IGig[];

@@ -110,7 +110,6 @@ return (
     <form onSubmit={handleOnSubmit} className="lg:flex-row flex flex-col lg:space-y-0 space-y-5" method="post">
       <div className=" space-y-10 flex flex-col lg:w-[50%] items-center">
         <input type="text" onChange={handleOnChange} value={gigData?.gigName} placeholder='Gig name' name='gigName'  className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/>
-        {/* <input type="text" onChange={handleOnChange} value={gigData?.gigCategory} placeholder='Category' name='gigCategory'  className='w-[90%] h-[55px] rounded-lg bg-transparent border p-5'/> */}
         <select name="" id="gigCategory" onChange={handleSelect} className='w-[90%] bg-transparent h-[55px] border rounded-md px-5'>
         <option value="" className="bg-black">Select Category</option>
           {categorys && categorys.map((category)=>{

@@ -5,12 +5,13 @@ import { freelancerGetAllGigs } from '../../redux/slices/freelancer/gigHandleSli
 import { freelancerEditById, freelancerGetById } from '../../redux/slices/freelancer/freelancerProfileHandleSlice';
 import moment from 'moment';
 import { FaEdit } from "react-icons/fa";
+import ButtonLoading from '../../components/ButtonLoading';
 
 const FreelancerProfile = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {gigs} = useAppSelector((state) => state.freelancer.freelancerGigManagement);
-    const {freelancer} = useAppSelector((state) => state.freelancer.freelancerProfileManagement);
+    const {freelancer,loading} = useAppSelector((state) => state.freelancer.freelancerProfileManagement);
     const [field,setField] = useState("");
     const [editUser,setEditUser] = useState({
             description:"",
@@ -271,7 +272,7 @@ const FreelancerProfile = () => {
                      </div>
                      <input onChange={(e)=>setProfileData({...profileData,name:e.target.value})} type="text" value={profileData.name} placeholder='Enter name' name="name"  className='w-[100%] h-[55px] rounded-lg bg-transparent border p-5'/>
                      <div className='flex justify-between w-[100%] '>
-                        <button onClick={handleProfile}  className="glass w-[40%] p-3 rounded-md font-bold text-yellow-500">Save</button>
+                        <button onClick={handleProfile}  className="glass w-[40%] p-3 rounded-md font-bold text-yellow-500">{loading?<ButtonLoading bg={{color:"FABD00"}} />:"Save"}</button>
                      </div>
                  </div>
            </div>

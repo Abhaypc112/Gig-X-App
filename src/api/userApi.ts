@@ -1,4 +1,5 @@
 import { IOrder } from "../interface/orderInterface";
+import { IReview } from "../interface/reviewInterface";
 import axiosInstance from "./axiosInstance";
 
 export const userGetAllGigsApi = async () => {
@@ -15,5 +16,13 @@ export const userCreateOrderApi = async (orderData : IOrder) => {
 }
 export const userGetOrdersByUserIdApi = async () => {
     const res = await axiosInstance.get('/user/get-orders-by-userId');
+    return res
+}
+export const addGigRatingApi = async (reviewData : IReview) => {
+    const res = await axiosInstance.post('/user/create-review',reviewData);
+    return res
+}
+export const getGigReviewByIdApi = async (gidId:string) => {
+    const res = await axiosInstance.get(`/user/get-review-by/${gidId}`);
     return res
 }

@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import moment from "moment";
 import { useGetOrdersByUserId } from "../../redux/slices/user/orderSlice";
 import { useNavigate } from "react-router-dom";
+import UserRating from "../../components/user/UserRating";
+import { userAddGigRating } from "../../redux/slices/user/reviewSlice";
 
 const UserViewOrders = () => {
    const dispatch = useAppDispatch();
@@ -12,8 +14,13 @@ const UserViewOrders = () => {
    const [filter, setFilter] = useState<boolean | null>(null);
    const [filteredData,setFilteredData] = useState(orders);
    const [searchTerm, setSearchTerm] = useState("");
+   const [gigId,setGigId] = useState("");
+   const [reviewData,setReviewData] = useState({
+      rating:0,
+      gigId:"",
+      comment:""
+   })
    
-
    useEffect(()=>{
       let result = orders;
 
@@ -39,13 +46,27 @@ const UserViewOrders = () => {
          naviagte(`/payment/${gigId}/${plan}`)
       }
    }
+
+   const handleRatingChange = (rating: number) => {
+      setReviewData({...reviewData,rating:rating,gigId:gigId});
+    };
+
+   const handleOnRating = async () => {
+      await dispatch(userAddGigRating(reviewData));
+      setGigId("")
+      setReviewData({
+         rating:0,
+         gigId:"",
+         comment:""
+      })
+   }
    
    if(loading) {
       return <LoadingPage/>
     }
   return (
     <div className="min-h-screen flex justify-center">
-      <div className=" flex flex-col min-h-screen p-5 space-y-6 w-[90%]">
+      <div className=" flex flex-col min-h-screen p-5 space-y-6 w-[90%] relative">
       <div className="top-side flex justify-between mt-[9rem]">
         <div className="options w-[100%] space-x-5 font-bold ">
         <button onClick={()=>setFilter(null)} className={filter === null ? "glass px-5 p-3 rounded-md text-xs":"glass-btn px-5 p-3 rounded-md text-xs"}>ALL</button>
@@ -66,6 +87,7 @@ const UserViewOrders = () => {
                 <td className="w-[20%] font-bold">TOTAL</td>
                 <td className="w-[20%] font-bold">PAYMENT STATUS</td>
                 <td className="w-[20%] font-bold">STATUS</td>
+                <td className="w-[20%] font-bold">ADD REVIEW</td>
              </tr>
           </div>
           {
@@ -80,7 +102,9 @@ const UserViewOrders = () => {
                         <td onClick={()=>handlePayment(order?.paymentStatus,order?.gigId?._id,order.gigPlan?.plan)} className="w-[20%] text-center"><button className={order.paymentStatus?"bg-[#13a14c]  p-1 rounded-sm w-[5rem]":"bg-[#a11313]  p-1 rounded-sm w-[5rem]"}> {order.paymentStatus?"Paid":"Pending"} </button></td>
                         {
                            order.paymentStatus ? (
-                              <td className="w-[20%] text-center"><button className={order.orderStatus?"bg-[#13a14c] px-3 p-1 rounded-sm w-[7rem]":"bg-yellow-500 px-3 p-1 rounded-sm w-[7rem]"}>{order.orderStatus?"Completed":"Active"} </button></td>
+                              <>
+                                 <td className="w-[20%] text-center"><button className={order.orderStatus?"bg-[#13a14c] px-3 p-1 rounded-sm w-[7rem]":"bg-yellow-500 px-3 p-1 rounded-sm w-[7rem]"}>{order.orderStatus?"Completed":"Active"} </button></td>
+                                 <td className="w-[20%] text-center"><button onClick={()=>setGigId(order.gigId._id)} className="glass px-3 p-1 rounded-sm w-[7rem]">Add Review</button></td></>
                            ):(
                               <td className="w-[20%] text-center"><button className="bg-[#a11313] px-3 p-1 rounded-sm w-[7rem]">Pending</button></td>
                            )
@@ -91,6 +115,27 @@ const UserViewOrders = () => {
             })
           }
       </div>
+      {
+         gigId && (
+            <div className="w-[100%] h-screen flex justify-center absolute items-center">
+               <div className="review-modal bg-black w-[90%] md:w-[70%] h-[70%] rounded p-10 flex flex-col justify-between">
+               <div className="flex justify-between">
+                  <h1 className="text-xl font-bold">Add Review</h1>
+                  <button onClick={()=>setGigId("")} className="glass px-5 p-2 rounded-md font-bold text-sm">Cancel</button>
+               </div>
+                  <div className="flex justify-center">
+                  <UserRating totalStars={5} onRate={handleRatingChange}/>
+               </div>
+                  <div className="flex justify-center">
+                     <textarea onChange={(e)=>setReviewData({...reviewData,comment:e.target.value})} placeholder="Write Comments . . ." name="Comment" className='w-[90%] max-h-[150px] rounded-lg bg-transparent border p-5'></textarea>
+                  </div>
+                  <div className="flex justify-center">
+                     <button onClick={handleOnRating} className="glass text-xl font-bold px-10 p-3 rounded w-[90%] text-yellow-500">Post</button>
+                  </div>
+               </div>
+            </div>
+         )
+      }
     </div>
     </div>
   )

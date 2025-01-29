@@ -19,6 +19,7 @@ export interface IGigPricing {
     _id:string;
     name:string;
     role:string;
+    profileImg?:string;
   }
 
 
