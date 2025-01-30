@@ -34,7 +34,7 @@ const FreelancerProfile = () => {
           }
     };
     const handleProfile = async() => {
-        console.log(profileData.name)
+        console.log(profileData)
         const formData = new FormData();
         formData.append('data',JSON.stringify({name:profileData.name}));
         formData.append("profileImg", image[0]);
@@ -131,7 +131,7 @@ const FreelancerProfile = () => {
                 <h1 className='font-bold'>{freelancer.name}</h1>
                 <div className='w-[100%] space-y-2'>
                     <div  className='flex justify-between w-[100%] text-xs'><span className='font-bold'>From</span> <span className='text-[#A9A9A9]'>Calicut</span></div>
-                    <div  className='flex justify-between w-[100%] text-xs' ><span className='font-bold'>Member since</span> <span className='text-[#A9A9A9]'>{moment(freelancer.createdAt).format("DD-MM-YYYY")}</span></div>
+                    <div  className='flex justify-between w-[100%] text-xs' ><span className='font-bold'>Member since</span> <span className='text-[#A9A9A9]'>{moment(freelancer.createdAt).format("DD-MMM-YYYY").toUpperCase()}</span></div>
                 </div>
             </div>
             <div className="glass rounded-md h-[15rem] md:w-[20rem]">

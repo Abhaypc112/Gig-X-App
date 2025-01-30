@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { userGetAllCategorys, userGetAllGigs } from "../../redux/slices/user/homeSlice";
 import { useNavigate } from "react-router-dom";
+import Banner from '../../assets/banner.png';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ const Home = () => {
     <div className="w-[100%] flex justify-center">
       <div className="w-[90%] space-y-10  mt-[9rem]">
         <div className="banner">
-          <img className="w-[100%] h-[15rem] rounded-md" src="https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2023/11/BF-Prep-Calendar_in-text-banner-1024x283.png" alt="banner" />
+          <img className="w-[100%] h-[15rem] rounded-md" src={Banner} alt="banner" />
         </div>
         <h1 className="text-4xl font-bold">Popular services</h1>
         <div className="services flex overflow-x-auto w-full scroll-icon-none">

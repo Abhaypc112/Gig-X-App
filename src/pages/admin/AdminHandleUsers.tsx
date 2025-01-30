@@ -68,7 +68,7 @@ const AdminHandleUsers = () => {
                         <td className="w-[30%] space-x-3 flex items-center"><img className="w-10 h-10 rounded-full" src={user.profileImg} alt="profile-image" /><span >{user.name}</span></td>
                         <td className="w-[20%] text-center">20</td>
                         <td className="w-[20%] text-center">{user.role}</td>
-                        <td className="w-[20%] text-center"><button onClick={()=>handleUser(user._id)} className="glass md:w-[5rem] p-1 rounded-sm">{user.isBlock ? "Unblock" : "Block"}</button></td>
+                        <td className="w-[20%] text-center"><button onClick={()=>handleUser(user._id!)} className="glass md:w-[5rem] p-1 rounded-sm">{user.isBlock ? "Unblock" : "Block"}</button></td>
                         <td className="w-[20%] text-center"><button className="glass md:w-[5rem] p-1 rounded-sm "> View </button></td>
                      </tr>
                </div>

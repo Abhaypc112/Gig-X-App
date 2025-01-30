@@ -26,3 +26,11 @@ export const getGigReviewByIdApi = async (gidId:string) => {
     const res = await axiosInstance.get(`/user/get-review-by/${gidId}`);
     return res
 }
+export const editUserApi = async (updatedData:FormData) => {
+    const res = await axiosInstance.patch(`/user/edit-user`,updatedData);
+    return res
+}
+export const getUserApi = async () => {
+    const res = await axiosInstance.get(`/user/get-data`);
+    return res
+}

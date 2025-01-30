@@ -189,7 +189,7 @@ const UserViewGig = () => {
             </div>
         </div>
         <div className="continue right-20 fixed col-span-1 mt-5">
-            <div className="glass w-[27rem] h-[30rem] rounded-xl flex flex-col items-center p-5 justify-between">
+            <div className="glass w-[26rem] h-[32rem] rounded-xl flex flex-col items-center p-5 justify-between">
                    <div className="flex flex-col justify-between w-full h-[25rem]">
                    <div className="plans flex justify-between w-full text-center">
                         <div onClick={()=>setPricePlan("basic")} className="w-[30%] glass p-4 rounded-md">Basic</div>
