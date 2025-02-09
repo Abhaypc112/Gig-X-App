@@ -13,6 +13,9 @@ If you are developing a production application, we recommend updating the config
 
 - Configure the top-level `parserOptions` property like this:
 
+- ![Screenshot 2025-02-05 105554](https://github.com/user-attachments/assets/d4c9a199-2033-4391-ac32-147c6147f9fc)
+
+
 ```js
 export default tseslint.config({
   languageOptions: {
