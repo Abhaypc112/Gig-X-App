@@ -1,53 +1,52 @@
-# React + TypeScript + Vite
+# Freelance Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Freelance Marketplace built using the MERN Stack (MongoDB, Express, React, Node.js) with TypeScript and Redux for state management. This platform bridges the gap between freelancers and clients, offering seamless project posting, real-time communication, and secure payment integration.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Freelancer Features:
 
-## Expanding the ESLint configuration
++ Post work samples to showcase skills.
++ Manage work status and milestones.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Client Features:
 
-- Configure the top-level `parserOptions` property like this:
++ Post project requirements.
++ Assign tasks to freelancers and track progress.
 
-- ![Screenshot 2025-02-05 105554](https://github.com/user-attachments/assets/d4c9a199-2033-4391-ac32-147c6147f9fc)
+General Features:
+
++ Real-Time Chat for seamless communication.
++ Payment Integration for secure and easy transactions.
+
+## Tech Stack
++ Frontend: React + TypeScript + Redux
++ Backend: Node.js + Express
++ Database: MongoDB
+
+## Screenshots
+
+![Page 1](https://github.com/user-attachments/assets/7ef41c65-a930-4a61-83f6-438b9af0782a)
+
+![Page 2](https://github.com/user-attachments/assets/1b7ad799-e579-4aac-9b10-5b01e72cd1e7)
+
+![Page 3](https://github.com/user-attachments/assets/d5b2cdf0-7984-448f-a8fb-396b4ab753c2)
+
+# How to Run
++ Clone the repository
+```git clone https://github.com/your-username/freelance-marketplace.git```
+```cd freelance-marketplace ```
++ Install dependencies:
+```npm install```
++ Start the development server:
+```npm start```
 
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+
+
+
+
+
