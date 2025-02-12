@@ -11,6 +11,8 @@ import FreelancerProtuctRoute from './routes/freelancer/FreelancerProtuctRoute'
 import { FreelancerRoutes } from './routes/freelancer/FreelancerRoutes'
 import FreelancerLayout from './Layout/FreelancerLayout'
 import UserLayout from './Layout/UserLayout'
+import AuthProtuctRouter from './routes/auth/AuthProtuctRouter'
+import AuthRoutes from './routes/auth/AuthRoutes'
 // import AuthRoutes from './routes/auth/AuthRoutes'
 
 
@@ -24,6 +26,11 @@ const App : React.FC = () => {
             return <Route key={index} path={path} element={element}/>
           })}
         </Route> */}
+        <Route element={<AuthProtuctRouter/>}>
+        {AuthRoutes.length>0 && AuthRoutes.map(({path, element},index)=>(
+          <Route key={index} path={path} element={element}/>
+        ))}
+      </Route>
         <Route element={<AdminProtectedRoute/>}>
           {AdminRoutes.length>0 && AdminRoutes.map(({path,element}:any,index: number) => {
             return <Route key={index} path={path} element={<AdminLayout>{element}</AdminLayout>} />
