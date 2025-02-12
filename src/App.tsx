@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import {AuthRoutes} from './routes/auth/AuthRoutes';
 import AdminProtectedRoute from './routes/admin/AdminProtectedRoute'
 import AuthProtuctRouter from './routes/auth/AuthProtuctRouter'
 import { AdminRoutes } from './routes/admin/AdminRoutes'
@@ -11,6 +10,7 @@ import FreelancerProtuctRoute from './routes/freelancer/FreelancerProtuctRoute'
 import { FreelancerRoutes } from './routes/freelancer/FreelancerRoutes'
 import FreelancerLayout from './Layout/FreelancerLayout'
 import UserLayout from './Layout/UserLayout'
+import {AuthRoutes} from './routes/auth/AuthRoutes';
 
 
 const App : React.FC = () => {
