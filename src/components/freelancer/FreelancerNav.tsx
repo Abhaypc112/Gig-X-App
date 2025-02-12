@@ -33,6 +33,7 @@ const FreelancerNav = () => {
                 <NavLink to="/freelancer/handle-gigs"><li className={location.pathname === "/freelancer/handle-gigs"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Gigs</li></NavLink>
                 <NavLink to="/freelancer/handle-orders"><li className={location.pathname === "/freelancer/handle-orders"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Orders</li></NavLink>
                 <NavLink to="/freelancer/profile"><li className={location.pathname === "/freelancer/profile"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Profile</li></NavLink>
+                <NavLink to='/chat'><li className={location.pathname === "/freelancer/profile"?'cursor-pointer text-yellow-500':'cursor-pointer hover:text-gray-400'}>Chat</li></NavLink>
             </ul>
         </div>
         <div className="right hidden lg:flex relative">

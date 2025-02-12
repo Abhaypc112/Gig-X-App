@@ -4,7 +4,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, InternalAxiosRequ
 
 // Create the Axios instance
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://gig-x-server.onrender.com/api",
   withCredentials: true,
 });
 

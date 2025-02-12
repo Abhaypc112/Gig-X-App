@@ -64,7 +64,7 @@ function Login() {
               <GoogleLogin
                   onSuccess={async(credentialResponse) => {
                     let data = {credentialResponse}
-                    await axios.post('http://localhost:5000/api/auth/google',data)
+                    await axios.post('https://gig-x-server.onrender.com/api/auth/google',data)
                     .then((res)=>{
                       const {accessToken,user} = res.data.userData;
                       localStorage.setItem('accessToken', accessToken);

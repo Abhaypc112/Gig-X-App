@@ -86,7 +86,7 @@ function Signup () {
             <GoogleLogin 
                 onSuccess={async(credentialResponse) => {
                   let data = {credentialResponse,option}
-                  await axios.post('http://localhost:5000/api/auth/google',data)
+                  await axios.post('https://gig-x-server.onrender.com/api/auth/google',data)
                   .then((res)=>{
                         const {accessToken,user} = res.data.userData;
                         localStorage.setItem('accessToken', accessToken);
@@ -123,7 +123,7 @@ function Signup () {
               <GoogleLogin
                 onSuccess={async(credentialResponse) => {
                   let data = {credentialResponse,option}
-                  const post = await axios.post('http://localhost:5000/api/auth/google',data)
+                  const post = await axios.post('https://gig-x-server.onrender.com/api/auth/google',data)
                   console.log(post)
                 }}
                 onError={() => {

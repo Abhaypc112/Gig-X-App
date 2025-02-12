@@ -11,7 +11,7 @@ const GoogleLogin: React.FC = () => {
     onSuccess: async (credentialResponse) => {
       try {
         const data = { credentialResponse,option };
-        const response = await axios.post('http://localhost:5000/api/auth/google', data);
+        const response = await axios.post('https://gig-x-server.onrender.com/api/auth/google', data);
         console.log(response.data)
         const { accessToken, user } = response.data.userData;
         localStorage.setItem('accessToken', accessToken);

@@ -1,4 +1,5 @@
 
+import Chat from "../../pages/freelancer/FreelancerChat";
 import FreelancerCreateGig from "../../pages/freelancer/FreelancerCreateGig";
 import FreelancerDashboard from "../../pages/freelancer/FreelancerDashboard";
 import FreelancerEditGig from "../../pages/freelancer/FreelancerEditGig";
@@ -13,5 +14,5 @@ export const FreelancerRoutes = [
     {path:"/freelancer/profile", element:<FreelancerProfile/>},
     {path:"/freelancer/create-gig", element:<FreelancerCreateGig/>},
     {path:"/freelancer/:gigId/edit-gig", element:<FreelancerEditGig/>},
-    // {path:"/message", element:<FreelancerChat/>},
+    {path:"/chat", element:<Chat/>},
 ];

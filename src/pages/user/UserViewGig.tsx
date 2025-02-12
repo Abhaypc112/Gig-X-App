@@ -7,21 +7,26 @@ import { useGetOrdersByUserId, userCreateOrder } from "../../redux/slices/user/o
 import LoadingPage from "../../components/LoadingPage";
 import { getGigReviewById } from "../../redux/slices/user/reviewSlice";
 import moment from "moment";
+import { getUser } from "../../redux/slices/user/profileSlice";
+import Chat from "./UserChat";
 
 const UserViewGig = () => {
     const {gigId} = useParams();
     const dispatch = useAppDispatch();
     const {gigs,loading} = useAppSelector((state)=>state.user.userHome);
     const {orders,error} = useAppSelector((state)=>state.user.userOrder);
+    const {user} = useAppSelector((state)=>state.user.userProfile);
     const {reviews} = useAppSelector((state)=>state.user.userReview);
     const order = orders.find((order)=> order.gigId?._id === gigId);
     const gig = gigs.find((gig)=>gig._id === gigId);
     const navigate = useNavigate();
     const [imgIndex,setImgIndex] = useState(0);
-    const [pricePlan,setPricePlan] = useState("basic")
+    const [pricePlan,setPricePlan] = useState("basic");
+    const [chatModal,setChatModal] = useState(false)
     
     useEffect(()=>{
         dispatch(useGetOrdersByUserId());
+        dispatch(getUser());
         dispatch(userGetAllGigs());
         dispatch(getGigReviewById(gigId!))
     },[dispatch])
@@ -88,8 +93,13 @@ const UserViewGig = () => {
   return (
     <div className="flex justify-center">
       <div className="grid grid-cols-3 h-screen w-[90%] mt-[9rem] relative">
-      <div className="chat fixed bottom-20 z-10">
-            <div className="w-[15rem] h-[5rem] bg-black rounded-full flex space-x-3 items-center px-3">
+        { chatModal ?(
+            <div className="chat z-10 fixed w-[90%] h-screen ">
+                <Chat freelancer={gig?.gigOwner} senderId={user._id} receiverId={gig?.gigOwner._id}/>
+            </div>
+        ):(
+            <div className="chat bottom-20 z-10 fixed w-[100%] ">
+            <div onClick={()=>setChatModal(true)} className="w-[15rem] fixed h-[5rem] bg-black rounded-full flex space-x-3 items-center px-3">
                 <img className="w-14 h-14 rounded-full" src={gig?.gigOwner.profileImg} alt="profile" />
                 <div className="flex flex-col">
                     <span>{gig?.gigOwner.name}</span>
@@ -100,6 +110,8 @@ const UserViewGig = () => {
                 </div>
             </div>
         </div>
+        )
+    }
         <div className=" col-span-2 space-y-10">
             <div className="space-y-5">
                 <h1 className="text-3xl font-bold">{gig?.gigDescription}</h1>
@@ -107,7 +119,7 @@ const UserViewGig = () => {
                     <img className="w-14 h-14 rounded-full" src={gig?.gigOwner.profileImg} alt="profile" />
                     <div className="flex flex-col">
                         <span className="font-bold">{gig?.gigOwner.name}</span>
-                        <span>⭐ {averageRating} <span className="text-sm">{`(${totalReviews})`} reviews</span></span>
+                        <span>⭐ {Math.round(averageRating)} <span className="text-sm">{`(${totalReviews})`} reviews</span></span>
                     </div>
                 </div>
                 <div className="space-y-5">
@@ -137,7 +149,7 @@ const UserViewGig = () => {
                 <p className="mt-1 text-sm">{totalReviews} reviews for this Gig</p>
                 <div className="flex items-center gap-2 mt-2">
                     <span className="text-yellow-400 text-xl">⭐</span>
-                    <span className="text-lg font-semibold">{averageRating}</span>
+                    <span className="text-lg font-semibold">{Math.round(averageRating)}</span>
                     <span className="text-sm text-gray-400">{totalReviews} reviews</span>
                 </div>
                 <div className="mt-4 w-full">

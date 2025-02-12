@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import axiosInstance from "./axiosInstance";
 
-const AUTH = "http://localhost:5000/api";
+const AUTH = "https://gig-x-server.onrender.com/api";
 
 export const userOtApi = (email : string) => {
     const res = axiosInstance.post(`${AUTH}/user/otp`,{email});
@@ -14,6 +14,7 @@ export const signupUserApi = (signupData : object) => {
 }
 export const loginUserApi = (loginData : object) => {
     const res = axiosInstance.post(`${AUTH}/user/login`,loginData);
+    console.log(res)
     return res
 }
 export const googleAuthApi = (idToken: string) => {

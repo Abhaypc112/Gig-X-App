@@ -1,6 +1,6 @@
 import Home from "../../pages/user/Home";
+import Chat from "../../pages/user/UserChat";
 import UserProfile from "../../pages/user/UserProfile";
-// import UserChat from "../../pages/user/UserChat";
 import UserViewCategoryProducts from "../../pages/user/UserViewCategoryProducts";
 import UserViewGig from "../../pages/user/UserViewGig";
 import UserViewOrders from "../../pages/user/UserViewOrders";
@@ -13,5 +13,5 @@ export const UserRoutes = [
     {path:"/orders", element:<UserViewOrders/>},
     {path:"/all-gigs/:category", element:<UserViewCategoryProducts/>},
     {path:"/profile", element:<UserProfile/>},
-    // {path:"/chat", element:<UserChat/>}
+    {path:"/chat/:senderId/:receiverId", element:<Chat/>}
 ];
