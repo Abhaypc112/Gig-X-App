@@ -1,3 +1,4 @@
+import { RouteObject } from "react-router-dom";
 import Home from "../../pages/user/Home";
 import Chat from "../../pages/user/UserChat";
 import UserProfile from "../../pages/user/UserProfile";
@@ -6,7 +7,7 @@ import UserViewGig from "../../pages/user/UserViewGig";
 import UserViewOrders from "../../pages/user/UserViewOrders";
 import UserViewPayment from "../../pages/user/UserViewPayment";
 
-export const UserRoutes = [
+export const UserRoutes : RouteObject[] = [
     {path:"/home", element:<Home/>},
     {path:"/view-gig/:gigId", element:<UserViewGig/>},
     {path:"/payment/:gigId/:gigPlan", element:<UserViewPayment/>},
