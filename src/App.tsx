@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import {authRoutes} from './routes/auth/AuthRoutes';
+import {AuthRoutes} from './routes/auth/AuthRoutes';
 import AdminProtectedRoute from './routes/admin/AdminProtectedRoute'
 import AuthProtuctRouter from './routes/auth/AuthProtuctRouter'
 import { AdminRoutes } from './routes/admin/AdminRoutes'
@@ -19,7 +19,7 @@ const App : React.FC = () => {
     <>
       <Routes>
         <Route element={<AuthProtuctRouter/>}>
-          {authRoutes.length>0 && authRoutes.map(({path,element}:any,index: number) => {
+          {AuthRoutes.length>0 && AuthRoutes.map(({path,element}:any,index: number) => {
             return <Route key={index} path={path} element={element}/>
           })}
         </Route>
