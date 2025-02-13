@@ -1,8 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-
 import AdminProtectedRoute from './routes/admin/AdminProtectedRoute'
-// import AuthProtuctRouter from './routes/auth/AuthProtuctRouter'
 import { AdminRoutes } from './routes/admin/AdminRoutes'
 import AdminLayout from './Layout/AdminLayout'
 import UserProtuctRoute from './routes/user/UserProtuctRoute'
@@ -12,8 +10,7 @@ import { FreelancerRoutes } from './routes/freelancer/FreelancerRoutes'
 import FreelancerLayout from './Layout/FreelancerLayout'
 import UserLayout from './Layout/UserLayout'
 import AuthProtuctRouter from './routes/auth/AuthProtuctRouter'
-import AuthRoutes from './routes/auth/AuthRoutes'
-// import AuthRoutes from './routes/auth/AuthRoutes'
+import AuthRoutes from './routes/auth/AuthenticationRoutes'
 
 
 const App : React.FC = () => {
@@ -21,11 +18,6 @@ const App : React.FC = () => {
   return (
     <>
       <Routes>
-        {/* <Route element={<AuthProtuctRouter/>}>
-          {AuthRoutes.length>0 && AuthRoutes.map(({path,element}:any,index: number) => {
-            return <Route key={index} path={path} element={element}/>
-          })}
-        </Route> */}
         <Route element={<AuthProtuctRouter/>}>
         {AuthRoutes.length>0 && AuthRoutes.map(({path, element},index)=>(
           <Route key={index} path={path} element={element}/>
