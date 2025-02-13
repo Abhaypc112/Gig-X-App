@@ -28,7 +28,8 @@ General Features:
 
 ![Page 1](https://github.com/user-attachments/assets/7ef41c65-a930-4a61-83f6-438b9af0782a)
 
-![Page 2](https://github.com/user-attachments/assets/1b7ad799-e579-4aac-9b10-5b01e72cd1e7)
+![Login](https://github.com/user-attachments/assets/ea0154cc-2ad3-4ee3-bbb2-d95e6626ae00)
+
 
 ![Page 3](https://github.com/user-attachments/assets/d5b2cdf0-7984-448f-a8fb-396b4ab753c2)
 
