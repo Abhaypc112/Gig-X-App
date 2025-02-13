@@ -7,6 +7,7 @@ import UserFreelancerOption from '../../pages/auth/UserFreelancerOption';
 const AuthenticationRoutes: RouteObject[] = [
   { path: '/:option/signup', element: <Signup/> },
   { path: '/login', element: <Login/>},
+  { path: '/', element: <Login/>},
   { path: "/option", element: <UserFreelancerOption /> },
 ];
 
